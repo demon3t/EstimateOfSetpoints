@@ -6,14 +6,10 @@ using System.Threading.Tasks;
 
 namespace Calculation.Interfaces
 {
-    internal interface Chose_PTN
+    internal interface IVerify_PTN
     {
-        public double PTNHigth { get; set; }
-        public double PTNMedium { get; set; }
-        public double PTNLower { get; set; }
-
         public bool VerifyPTNHigth();
-        public bool VerifyPTNMedium();
+        public bool? VerifyPTNMedium();
         public bool VerifyPTNLower();
     }
 }

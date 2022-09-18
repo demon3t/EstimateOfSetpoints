@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace Calculation.Interfaces
 {
-    internal interface DTO
+    internal interface IDTO
     {
         public double MaximumUnbalanceCurrent();
-        public double BTN { get; set; }
         public double DTOTriggerSetpoint();
     }
 }

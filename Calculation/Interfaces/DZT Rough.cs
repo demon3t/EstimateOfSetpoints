@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Calculation.Interfaces
 {
-    internal interface DZT_Rough
+    internal interface IDZT_Rough
     {
         public double DZTMinimumInitialCurrent { get; set; }
         public double InitialCurrent();

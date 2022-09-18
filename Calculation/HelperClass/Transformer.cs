@@ -8,8 +8,16 @@ namespace Calculation.Interfaces
 {
     public class Transformer
     {
+        public enum TypeTransformer
+        {
+            Double = 1,
+            Split = 2,
+            Triple = 3
+        }
+
         public Transformer(double _nominalPower, double _nominalHightVoltage, double _nominalMediumVoltage, double _nominalLowerVoltage,
-            int _settingCountRPNHight, double _stepRPNHight, int _settingCountRPNMedium, double _stepRPNMedium)
+            int _settingCountRPNHight, double _stepRPNHight, int _settingCountRPNMedium, double _stepRPNMedium,
+            TypeTransformer _type)
         {
             nominalPower = _nominalPower;
             nominalHightVoltage = _nominalHightVoltage;
@@ -19,7 +27,9 @@ namespace Calculation.Interfaces
             stepRPNHight = _stepRPNHight;
             settingCountRPNMedium = _settingCountRPNMedium;
             stepRPNMedium = _stepRPNMedium;
+            type = _type;
         }
+        public TypeTransformer type { get; set; }
 
         public double nominalPower { get; set; }
         public double nominalHightVoltage { get; set; }
