@@ -29,7 +29,7 @@ namespace Calculation
 
         Transformer transformer;
 
-        public CalculRelay(Transformer transformer, CalculPower power, TSN tsn , BMRZ bmrz)
+        public CalculRelay(Transformer transformer, CalculPower power, TSN tsn, BMRZ bmrz)
         {
             this.transformer = transformer;
             this.power = power;
@@ -72,10 +72,10 @@ namespace Calculation
 
         public bool? VerifyPTNMedium() // Проверка ПТН в нагрузочном режиме СН(НН2)
         {
-            return PTN.PTNMedium == -1? null :
-                PTN.PTNMedium < 2?
-                PTN.PTNHigth <= 3 * NominalCurrentMedium() / TT_Setting.transfCoeffmMedium? true : false :
-                PTN.PTNMedium <= 6 * NominalCurrentMedium() / TT_Setting.transfCoeffmMedium? true : false;
+            return PTN.PTNMedium == -1 ? null :
+                PTN.PTNMedium < 2 ?
+                PTN.PTNHigth <= 3 * NominalCurrentMedium() / TT_Setting.transfCoeffmMedium ? true : false :
+                PTN.PTNMedium <= 6 * NominalCurrentMedium() / TT_Setting.transfCoeffmMedium ? true : false;
         }
 
         public bool VerifyPTNLower() // Проверка ПТН в нагрузочном режиме НН
@@ -121,59 +121,53 @@ namespace Calculation
         }
 
         #endregion
-
+        // +
         #region "Грубый" орган ДЗТ
 
-        public double Rought_InitialCurrent()
+        public double Rought_InitialCurrent() // начальный ток срабатывания ДЗТ
         {
             double result1 = 0.3;
             double result2 = DZT.DZTMinimumInitialCurrent;
 
-            double k3_1 = transformer.settingCountRPNHight == 0 ? 0 :
+            double k1 = transformer.settingCountRPNHight == 0 ? 0 :
                 Math.Max(0.05, (transformer.settingCountRPNHight - 1) / 2 * transformer.stepRPNHight / 100);
-
-            double k3_2 = transformer.settingCountRPNMedium == 0 || (int)transformer.type < 3 ? 0 :
+            double k2 = transformer.settingCountRPNMedium == 0 || (int)transformer.type < 3 ? 0 :
                 Math.Max(0.05, (transformer.settingCountRPNMedium - 1) / 2 * transformer.stepRPNMedium / 100);
 
-            double result3 = Math.Round(1.5 * (1 * 1 * TT_Setting.E0_5 + k3_1 * 1 + k3_2 + 0.05) * 0.5,
+            double result3 = Math.Round(1.5 * (1 * 1 * TT_Setting.E0_5 + k1 * 1 + k2 + 0.05) * 0.5,
                 2, MidpointRounding.ToPositiveInfinity);
 
-            double result4 = (int)tsn == 1 ? 0 : Math.Round(1.5 * Currents.MaxCurrentTSN / NominalCurrentHight(),
+            double result4 = (int)tsn == 1 ? 0 :
+                Math.Round(1.5 * Currents.MaxCurrentTSN / NominalCurrentHight(),
                 2, MidpointRounding.ToPositiveInfinity);
 
-            return Math.Max(result1, Math.Max(result2, Math.Max(result3, result4)));
+            return Math.Max(Math.Max(result1, result2), Math.Max(result3, result4));
         }
-
-        public double Rought_InitialCurrent_1_5()
+        public double Rought_InitialCurrent_1_5() // ток срабатывания ДЗТ при токе торможения
         {
             double k1 = transformer.settingCountRPNHight == 0 ? 0 :
-                transformer.settingCountRPNHight < 7 ? 0.5 :
-                Math.Max(0.05, 3 * transformer.stepRPNHight / 100);
+                Math.Max(0.05, (transformer.settingCountRPNHight - 1) / 2 * transformer.stepRPNHight / 100);
 
-            double k2 = transformer.settingCountRPNMedium == 0 || (int)transformer.type < 3 ? 0 :
-                transformer.settingCountRPNMedium < 7 ? 0.05 :
-                Math.Max(0.05, 3 * transformer.settingCountRPNMedium / 100);
+            double k2 = transformer.settingCountRPNMedium == 0 || (int)transformer.type < 3 ? 0.05 :
+                Math.Max(0.05, (transformer.settingCountRPNMedium - 1) / 2 * transformer.stepRPNMedium / 100);
 
-            return Math.Round(1.2 * (2 * 1 * TT_Setting.E1_5 + k1 * 1 + k2 * 1 + 0.05) * 1.5
-                , 2, MidpointRounding.ToPositiveInfinity);
-        }
-
-        public double Rought_SecondDecelerationCoefficient()
-        {
-            return Math.Round(Math.Max(0.2, Rought_InitialCurrent_1_5() - Rought_InitialCurrent()),
+            return Math.Round(1.2 * (2 * 1 * TT_Setting.E1_5 + k1 * 1 + k2 + 0.05) * 1.5,
                 2, MidpointRounding.ToPositiveInfinity);
         }
-
-        public double Rought_MaxiBrakingCurrent()
+        public double Rought_SecondDecelerationCoefficient() // коэффициент торможения второго участка ДЗТ
         {
-            double k1 = (int)transformer.type == 1 ?
-                Currents.LowerToHight : Math.Max(Currents.LowerToHight, Currents.MidleToHight);
-
-            return Math.Round((1 * 2.5 * TT_Setting.Emax) * k1
-                , 2, MidpointRounding.ToPositiveInfinity);
+            return Math.Round(Math.Max(0.02, Rought_InitialCurrent_1_5() - Rought_InitialCurrent()),
+                2, MidpointRounding.ToPositiveInfinity);
         }
+        public double Rought_MaxiBrakingCurrent() // ток торможения при максимальном токе КЗ
+        {
+            double k1 = (int)transformer.type == 1 ? Currents.LowerToHight :
+                Math.Max(Currents.LowerToHight, Currents.MidleToHight);
 
-        public double Rought_ThirdDecelerationCoefficient()
+            return Math.Round(((1 - 2.5 * TT_Setting.Emax / 2) * k1) / NominalCurrentHight(),
+                2, MidpointRounding.ToPositiveInfinity);
+        }
+        public double Rought_ThirdDecelerationCoefficient() // коэффициент торможения третьего участка ДЗТ
         {
             return Math.Round((MaximumUnbalanceCurrent() - Rought_InitialCurrent_1_5()) / (Rought_MaxiBrakingCurrent() - 1.5),
                 2, MidpointRounding.ToPositiveInfinity);
@@ -183,27 +177,29 @@ namespace Calculation
 
         #region "Чувствительный" орган ДЗТ
 
-        public double Sensitive_InitialCurrent()
+        public double Sensitive_InitialCurrent() // начальный ток срабатывания ДЗТ
         {
             double result1 = 0.3;
             double result2 = DZT.DZTMinimumInitialCurrent;
 
-            double k3_1 = transformer.settingCountRPNHight == 0 ? 0 :
-                Math.Max(0.05, (transformer.settingCountRPNHight - 1) / 2 * transformer.stepRPNHight / 100);
+            double k1 = transformer.settingCountRPNHight == 0 ? 0 :
+                transformer.settingCountRPNHight < 7 ? 0.5 :
+                Math.Max(0.05, 3 * transformer.stepRPNHight / 100);
 
-            double k3_2 = transformer.settingCountRPNMedium == 0 || (int)transformer.type < 3 ? 0 :
-                Math.Max(0.05, (transformer.settingCountRPNMedium - 1) / 2 * transformer.stepRPNMedium / 100);
+            double k2 = transformer.settingCountRPNMedium == 0 || (int)transformer.type < 3 ? 0 :
+                transformer.settingCountRPNMedium < 7 ? 0.05 :
+                Math.Max(0.05, 3 * transformer.stepRPNMedium / 100);
 
-            double result3 = Math.Round(1.5 * (1 * 1 * TT_Setting.E0_5 + k3_1 * 1 + k3_2 + 0.05) * 0.5,
+            double result3 = Math.Round(1.5 * (1 * 1 * TT_Setting.E0_5 + k1 * 1 + k2 + 0.05) * 0.5,
                 2, MidpointRounding.ToPositiveInfinity);
 
-            double result4 = (int)tsn == 1 ? 0 : Math.Round(1.5 * Currents.MaxCurrentTSN / NominalCurrentHight(),
+            double result4 = (int)tsn == 1 ? 0 :
+                Math.Round(1.5 * Currents.MaxCurrentTSN / NominalCurrentHight(),
                 2, MidpointRounding.ToPositiveInfinity);
 
-            return Math.Max(result1, Math.Max(result2, Math.Max(result3, result4)));
+            return Math.Max(Math.Max(result1, result2), Math.Max(result3, result4));
         }
-
-        public double Sensitive_InitialCurrent_1_5()
+        public double Sensitive_InitialCurrent_1_5() // ток срабатывания ДЗТ при токе торможения 1,5 Iном
         {
             double k1 = transformer.settingCountRPNHight == 0 ? 0 :
                 transformer.settingCountRPNHight < 7 ? 0.5 :
@@ -211,39 +207,38 @@ namespace Calculation
 
             double k2 = transformer.settingCountRPNMedium == 0 || (int)transformer.type < 3 ? 0 :
                 transformer.settingCountRPNMedium < 7 ? 0.05 :
-                Math.Max(0.05, 3 * transformer.settingCountRPNMedium / 100);
+                Math.Max(0.05, 3 * transformer.stepRPNMedium / 100);
 
-            return Math.Round(1.2 * (2 * 1 * TT_Setting.E1_5 + k1 * 1 + k2 * 1 + 0.05) * 1.5
-                , 2, MidpointRounding.ToPositiveInfinity);
-        }
-
-        public double Sensitive_SecondDecelerationCoefficient()
-        {
-            return Math.Round(Math.Max(0.2, Rought_InitialCurrent_1_5() - Rought_InitialCurrent()),
+            return Math.Round(1.2 * (2 * 1 * TT_Setting.E1_5 + k1 * 1 + k2 * 1 + 0.05) * 1.5,
                 2, MidpointRounding.ToPositiveInfinity);
         }
-
-        public double Sensitive_MaxiBrakingCurrent()
+        public double Sensitive_SecondDecelerationCoefficient() // коэффициент торможения второго участка ДЗТ
         {
-            double k1 = (int)transformer.type == 1 ?
-                Currents.LowerToHight : Math.Max(Currents.LowerToHight, Currents.MidleToHight);
-
-            return Math.Round((1 * 2.5 * TT_Setting.Emax) * k1
-                , 2, MidpointRounding.ToPositiveInfinity);
-        }
-
-        public double Sensitive_ThirdDecelerationCoefficient()
-        {
-            return Math.Round((MaximumUnbalanceCurrent() - Rought_InitialCurrent_1_5()) / (Rought_MaxiBrakingCurrent() - 1.5),
+            return Math.Round(Math.Max(0.2, Sensitive_InitialCurrent_1_5() - Sensitive_InitialCurrent()),
                 2, MidpointRounding.ToPositiveInfinity);
         }
-
-        public double Sensitive_MaxUnbalanceCurrent()
+        public double Sensitive_MaxUnbalanceCurrent() // отстройка от максимального тока небаланса
         {
-            return 0;
+            double k1 = transformer.settingCountRPNHight == 0 ? 0 :
+                transformer.settingCountRPNHight < 7 ? 0.5 :
+                Math.Max(0.05, 3 * transformer.stepRPNHight / 100);
+
+            double k2 = transformer.settingCountRPNMedium == 0 || (int)transformer.type < 3 ? 0 :
+                transformer.settingCountRPNMedium < 7 ? 0.05 :
+                Math.Max(0.05, 3 * transformer.stepRPNMedium / 100);
+
+            double k3 = (int)transformer.type == 1 ? Currents.LowerToHight :
+                Math.Max(Currents.LowerToHight, Currents.MidleToHight);
+
+            return Math.Round(1.2 * (2.5 * 1 * TT_Setting.Emax + k1 * 1 + k2 * 1 + 0.05) * k3 / NominalCurrentHight(),
+                2, MidpointRounding.ToPositiveInfinity);
+        }
+        public double Sensitive_ThirdDecelerationCoefficient() // коэффициент торжения третьего участка ДЗТ
+        {
+            return Math.Round((Sensitive_MaxUnbalanceCurrent() - Sensitive_InitialCurrent_1_5()) / (Rought_MaxiBrakingCurrent() - 1.5),
+                2, MidpointRounding.ToPositiveInfinity);
         }
 
         #endregion
-
     }
 }
