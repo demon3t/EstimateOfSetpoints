@@ -26,5 +26,12 @@ namespace Calculation.HelperClass
         public static void Set_HigthToHight(double value) => HigthToHight = value;
         public static void Set_MidleToHight(double value) => MidleToHight = value;
         public static void Set_LowerToHight(double value) => LowerToHight = value;
+
+
+        public static double MaxCurrentTSN { get; private set; } = 0;
+        public static double WorkCurrentTSN { get; private set; } = 0;
+        public static void Set_MaxCurrentTSN(double value) => MaxCurrentTSN = value;
+        public static void Set_WorkCurrentTSN(int value) => WorkCurrentTSN = value;
+
     }
 }

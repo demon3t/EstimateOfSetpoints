@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Calculation.Interfaces
 {
-    internal interface INominaf_Currents
+    public interface INominaf_Currents
     {
         public double NominalCurrentHight();
         public double NominalCurrentMedium();

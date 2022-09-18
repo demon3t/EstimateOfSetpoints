@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace Calculation.Interfaces
 {
-    internal interface IDTO
+    public interface IVerify_PTN
     {
-        public double MaximumUnbalanceCurrent();
-        public double DTOTriggerSetpoint();
+        public bool VerifyPTNHigth();
+        public bool? VerifyPTNMedium();
+        public bool VerifyPTNLower();
     }
 }
