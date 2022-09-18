@@ -17,19 +17,27 @@ namespace Calculation
             Yes = 2
         }
 
+        public enum BMRZ
+        {
+            First = 1,
+            Second = 2
+        }
+
         CalculPower power;
         TSN tsn;
+        BMRZ bmrz;
 
         Transformer transformer;
 
-        public CalculRelay(Transformer transformer, CalculPower power, TSN tsn)
+        public CalculRelay(Transformer transformer, CalculPower power, TSN tsn , BMRZ bmrz)
         {
             this.transformer = transformer;
             this.power = power;
             this.tsn = tsn;
+            this.bmrz = bmrz;
         }
 
-
+        // + 
         #region Расчёт минимальных токов сторон
 
         public double NominalCurrentHight() // рсчёт наминального тока на стороне ВН
@@ -52,35 +60,27 @@ namespace Calculation
         }
 
         #endregion
-
+        // + 
         #region Проверка ПТН в нагрузочном режиме
 
         public bool VerifyPTNHigth() // Проверка ПТН в нагрузочном режиме ВН
         {
-            if (PTN.PTNHigth < 2)
-                if (PTN.PTNHigth <= 3 * NominalCurrentHight() / TT_Setting.transfCoeffHight) return true;
-                else return false;
-            else
-                if (PTN.PTNHigth <= 6 * NominalCurrentHight() / TT_Setting.transfCoeffHight) return true;
-            else return false;
+            return PTN.PTNHigth < 2 ?
+                PTN.PTNHigth <= 3 * NominalCurrentHight() / TT_Setting.transfCoeffHight ? true : false :
+                PTN.PTNHigth <= 6 * NominalCurrentHight() / TT_Setting.transfCoeffHight ? true : false;
         }
 
         public bool? VerifyPTNMedium() // Проверка ПТН в нагрузочном режиме СН(НН2)
         {
-            if (PTN.PTNMedium == -1)
-                return null;
-
-            if (PTN.PTNMedium < 2)
-                if (PTN.PTNHigth <= 3 * NominalCurrentMedium() / TT_Setting.transfCoeffmMedium) return true;
-                else return false;
-            else
-                if (PTN.PTNMedium <= 6 * NominalCurrentMedium() / TT_Setting.transfCoeffmMedium) return true;
-            else return false;
+            return PTN.PTNMedium == -1? null :
+                PTN.PTNMedium < 2?
+                PTN.PTNHigth <= 3 * NominalCurrentMedium() / TT_Setting.transfCoeffmMedium? true : false :
+                PTN.PTNMedium <= 6 * NominalCurrentMedium() / TT_Setting.transfCoeffmMedium? true : false;
         }
 
         public bool VerifyPTNLower() // Проверка ПТН в нагрузочном режиме НН
         {
-            if (false == true)  // что за условие?
+            if ((int)bmrz == 2 && (int)transformer.type == 2)
                 if (PTN.PTNLower < 2)
                     if (PTN.PTNLower <= 2 * 3 * NominalCurrentLower() / TT_Setting.transfCoeffLower) return true;
                     else return false;
@@ -97,30 +97,19 @@ namespace Calculation
         }
 
         #endregion
-
+        // +
         #region Расчёт уставок ДТО
 
         public double MaximumUnbalanceCurrent() // отстройка от максимального тока небаланса
         {
-            double k1;
-            if (transformer.settingCountRPNHight == 0) k1 = 0;
-            else
-                if (0.05 > (transformer.settingCountRPNHight - 1) / 2 * transformer.stepRPNHight / 100) k1 = 0.05;
-            else k1 = (transformer.settingCountRPNHight - 1) / 2 * transformer.stepRPNHight / 100;
+            double k1 = transformer.settingCountRPNHight == 0 ? 0 :
+                Math.Max(0.05, (transformer.settingCountRPNHight - 1) / 2 * transformer.stepRPNHight / 100);
 
+            double k2 = transformer.settingCountRPNMedium == 0 || (int)transformer.type < 3 ? 0 :
+                Math.Max(0.05, (transformer.settingCountRPNMedium - 1) / 2 * transformer.stepRPNMedium / 100);
 
-            double k2;
-            if (transformer.settingCountRPNMedium == 0 || (int)transformer.type < 3) k2 = 0;
-            else
-                if (0.05 > (transformer.settingCountRPNMedium - 1) / 2 * transformer.stepRPNMedium / 100) k2 = 0.05;
-            else k2 = (transformer.settingCountRPNMedium - 1) / 2 * transformer.stepRPNMedium / 100;
-
-            double k3;
-            if ((int)transformer.type == 1)
-                k3 = Currents.LowerToHight;
-            else
-                if (Currents.MidleToHight > Currents.LowerToHight) k3 = Currents.MidleToHight;
-            else k3 = Currents.LowerToHight;
+            double k3 = (int)transformer.type == 1 ? Currents.LowerToHight :
+                Math.Max(Currents.MidleToHight, Currents.LowerToHight);
 
             return Math.Round(1.2 * (2.5 * 1 * TT_Setting.Emax + k1 * 1 + k2 + 0.05) * k3 / NominalCurrentHight(),
                 2, MidpointRounding.ToPositiveInfinity);
@@ -128,8 +117,7 @@ namespace Calculation
 
         public double DTOTriggerSetpoint() // уставка срабатывания ДТО
         {
-            if (MaximumUnbalanceCurrent() > DTO.BTN) return MaximumUnbalanceCurrent();
-            else return DTO.BTN;
+            return Math.Max(MaximumUnbalanceCurrent(), DTO.BTN);
         }
 
         #endregion
@@ -248,6 +236,11 @@ namespace Calculation
         {
             return Math.Round((MaximumUnbalanceCurrent() - Rought_InitialCurrent_1_5()) / (Rought_MaxiBrakingCurrent() - 1.5),
                 2, MidpointRounding.ToPositiveInfinity);
+        }
+
+        public double Sensitive_MaxUnbalanceCurrent()
+        {
+            return 0;
         }
 
         #endregion

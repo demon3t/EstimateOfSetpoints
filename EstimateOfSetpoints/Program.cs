@@ -3,7 +3,7 @@ using Calculation.Interfaces;
 
 Transformer transformer = new Transformer(40, 115, 38.5, 11, 19, 1.78, 5, 2.5 , Transformer.TypeTransformer.Triple);
 
-CalculRelay calcul = new(transformer, CalculRelay.CalculPower.Full, CalculRelay.TSN.No);
+CalculRelay calcul = new(transformer, CalculRelay.CalculPower.Full, CalculRelay.TSN.No, CalculRelay.BMRZ.First);
 
 IDZT dZT = calcul;
 
