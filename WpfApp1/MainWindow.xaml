@@ -1,0 +1,69 @@
+﻿<Window x:Class="WpfApp1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1"
+        xmlns:hc="https://handyorg.github.io/handycontrol"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="520" Width="510"
+        MinWidth="510">
+    <Grid>
+        <TabControl>
+            <TabItem Header="Данные трансформатора">
+                <Grid x:Name="DataTransform">
+                    <StackPanel hc:TitleElement.TitleWidth="168" Grid.Row="1" Margin="20,16,17,10">
+                        <StackPanel x:Name="StackPanelDataTransform">
+                            <TextBlock Text="Тип трансформатора"/>
+                            <hc:SplitButton x:Name="SelectTypeTransformer" Width="{Binding ElementName=StackPanelDataTransform, Path=ActualWidth}"
+                                            Content="Двухобмоточный трансформатор с расщеплённой обмоткой стороны НН" HorizontalAlignment="Left">
+                                <hc:SplitButton.DropDownContent>
+                                    <StackPanel>
+                                        <MenuItem Header="Двухобмоточный трансформатор"
+                                                  Click="MenuItem1_Click"/>
+                                        <MenuItem Header="Двухобмоточный трансформатор с расщеплённой обмоткой стороны НН"
+                                                  Click="MenuItem2_Click"/>
+                                        <MenuItem Header="Трёхобмоточный трансформатор"
+                                                  Click="MenuItem3_Click"/>
+                                    </StackPanel>
+                                </hc:SplitButton.DropDownContent>
+                            </hc:SplitButton>
+                            <TextBlock Text="Номинальная мощность, МВА"/>
+                            <TextBox Text="40"/>
+                            <TextBlock Text="Номинальное напряжение стороны ВН, кВ"/>
+                            <TextBox Text="115"/>
+                            <TextBlock Text="Номинальное напряжение стороны СН (НН2), кВ"/>
+                            <TextBox Text="38,5"/>
+                            <TextBlock Text="Номинальное напряжение стороны НН, кВ"/>
+                            <TextBox Text="11"/>
+                            <TextBlock Text="Колличество ступеней регулирования ВН"/>
+                            <TextBox Text="19"/>
+                            <TextBlock Text="Шаг регулирования напряжения, %"/>
+                            <TextBox Text="1,78"/>
+                            <TextBlock Text="Колличество ступеней регулирования СН"/>
+                            <TextBox Text="5"/>
+                            <TextBlock Text="Шаг регулирования напряжения, %"/>
+                            <TextBox Text="2,5"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Данные токов">
+                <Grid>
+
+                </Grid>
+            </TabItem>
+            <TabItem Header="Данные ТТ">
+                <Grid>
+
+                </Grid>
+            </TabItem>
+            <TabItem Header="Результат">
+                <Grid>
+
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

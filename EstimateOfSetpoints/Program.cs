@@ -45,5 +45,9 @@ Console.WriteLine(dZT.Sensitive_SecondDecelerationCoefficient());
 Console.WriteLine(dZT.Sensitive_MaxUnbalanceCurrent());
 Console.WriteLine(dZT.Sensitive_ThirdDecelerationCoefficient());
 
+// Коэффициент чувствительности
+Console.WriteLine();
+Console.WriteLine("Коэффициент чувствительности");
+Console.WriteLine(dZT.Sensitive_InitialCurrent());
 
 
