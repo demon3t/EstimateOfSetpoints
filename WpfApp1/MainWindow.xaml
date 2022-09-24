@@ -8,45 +8,73 @@
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
         mc:Ignorable="d"
         Title="MainWindow" Height="520" Width="510"
-        MinWidth="510">
+        MinWidth="520">
     <Grid>
         <TabControl>
             <TabItem Header="Данные трансформатора">
                 <Grid x:Name="DataTransform">
-                    <StackPanel hc:TitleElement.TitleWidth="168" Grid.Row="1" Margin="20,16,17,10">
-                        <StackPanel x:Name="StackPanelDataTransform">
-                            <TextBlock Text="Тип трансформатора"/>
-                            <hc:SplitButton x:Name="SelectTypeTransformer" Width="{Binding ElementName=StackPanelDataTransform, Path=ActualWidth}"
+                    <ScrollViewer HorizontalAlignment="Left"  VerticalScrollBarVisibility="Visible" Width="{Binding ElementName=DataTransform, Path=ActualWidth}">
+
+                        <StackPanel hc:TitleElement.TitleWidth="168" Margin="15,15,15,15">
+                            <StackPanel x:Name="StackPanelDataTransform">
+                                <TextBlock Text="Тип трансформатора"/>
+                                <hc:SplitButton x:Name="SelectTypeTransformer" Width="{Binding ElementName=StackPanelDataTransform, Path=ActualWidth}"
                                             Content="Двухобмоточный трансформатор с расщеплённой обмоткой стороны НН" HorizontalAlignment="Left">
-                                <hc:SplitButton.DropDownContent>
-                                    <StackPanel>
-                                        <MenuItem Header="Двухобмоточный трансформатор"
+                                    <hc:SplitButton.DropDownContent>
+                                        <StackPanel>
+                                            <MenuItem Header="Двухобмоточный трансформатор"
                                                   Click="MenuItem1_Click"/>
-                                        <MenuItem Header="Двухобмоточный трансформатор с расщеплённой обмоткой стороны НН"
+                                            <MenuItem Header="Двухобмоточный трансформатор с расщеплённой обмоткой стороны НН"
                                                   Click="MenuItem2_Click"/>
-                                        <MenuItem Header="Трёхобмоточный трансформатор"
+                                            <MenuItem Header="Трёхобмоточный трансформатор"
                                                   Click="MenuItem3_Click"/>
-                                    </StackPanel>
-                                </hc:SplitButton.DropDownContent>
-                            </hc:SplitButton>
-                            <TextBlock Text="Номинальная мощность, МВА"/>
-                            <TextBox Text="40"/>
-                            <TextBlock Text="Номинальное напряжение стороны ВН, кВ"/>
-                            <TextBox Text="115"/>
-                            <TextBlock Text="Номинальное напряжение стороны СН (НН2), кВ"/>
-                            <TextBox Text="38,5"/>
-                            <TextBlock Text="Номинальное напряжение стороны НН, кВ"/>
-                            <TextBox Text="11"/>
-                            <TextBlock Text="Колличество ступеней регулирования ВН"/>
-                            <TextBox Text="19"/>
-                            <TextBlock Text="Шаг регулирования напряжения, %"/>
-                            <TextBox Text="1,78"/>
-                            <TextBlock Text="Колличество ступеней регулирования СН"/>
-                            <TextBox Text="5"/>
-                            <TextBlock Text="Шаг регулирования напряжения, %"/>
-                            <TextBox Text="2,5"/>
+                                        </StackPanel>
+                                    </hc:SplitButton.DropDownContent>
+                                </hc:SplitButton>
+                                
+                                <TextBlock Text="Номинальная мощность, МВА"/>
+                                <TextBox Text="40" 
+                                         PreviewTextInput="TextBox_PreviewTextInput"
+                                         IsKeyboardFocusedChanged="TextBox_FocusableChanged"/>
+                                
+                                <TextBlock Text="Номинальное напряжение стороны ВН, кВ"/>
+                                <TextBox Text="115"
+                                         PreviewTextInput="TextBox_PreviewTextInput"
+                                         IsKeyboardFocusedChanged="TextBox_FocusableChanged"/>
+                                
+                                <TextBlock Text="Номинальное напряжение стороны СН (НН2), кВ"/>
+                                <TextBox Text="38,5"
+                                         PreviewTextInput="TextBox_PreviewTextInput"
+                                         IsKeyboardFocusedChanged="TextBox_FocusableChanged"/>
+                                
+                                <TextBlock Text="Номинальное напряжение стороны НН, кВ"/>
+                                <TextBox Text="11"
+                                         PreviewTextInput="TextBox_PreviewTextInput"
+                                         IsKeyboardFocusedChanged="TextBox_FocusableChanged"/>
+                                
+                                <TextBlock Text="Колличество ступеней регулирования ВН"/>
+                                <TextBox Text="19"
+                                         PreviewTextInput="TextBox_PreviewTextInput"
+                                         IsKeyboardFocusedChanged="TextBox_FocusableChanged"/>
+                                
+                                <TextBlock Text="Шаг регулирования напряжения, %"/>
+                                <TextBox Text="1,78"
+                                         PreviewTextInput="TextBox_PreviewTextInput"
+                                         IsKeyboardFocusedChanged="TextBox_FocusableChanged"/>
+                                
+                                <TextBlock Text="Колличество ступеней регулирования СН"/>
+                                <TextBox Text="5"
+                                         PreviewTextInput="TextBox_PreviewTextInput"
+                                         IsKeyboardFocusedChanged="TextBox_FocusableChanged"/>
+                                
+                                <TextBlock Text="Шаг регулирования напряжения, %"/>
+                                <TextBox Text="2,5"
+                                         PreviewTextInput="TextBox_PreviewTextInput"
+                                         IsKeyboardFocusedChanged="TextBox_FocusableChanged"/>
+                                
+                            </StackPanel>
                         </StackPanel>
-                    </StackPanel>
+                    </ScrollViewer>
                 </Grid>
             </TabItem>
             <TabItem Header="Данные токов">

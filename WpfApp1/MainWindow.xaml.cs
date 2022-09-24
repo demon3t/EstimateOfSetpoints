@@ -1,7 +1,8 @@
 ﻿using Calculation;
 using HandyControl.Tools;
+using System;
 using System.Windows;
-
+using System.Windows.Controls;
 
 namespace WpfApp1
 {
@@ -39,6 +40,19 @@ namespace WpfApp1
         {
             transformer.type = Transformer.TypeTransformer.Triple;
             SelectTypeTransformer.Content = "Трёххобмоточный трансформатор";
+        }
+
+        private void TextBox_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        {
+            if (!(Char.IsDigit(e.Text, 0) || e.Text == "." || e.Text == ",") && e.SystemText.Contains(" "))
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void TextBox_FocusableChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            ((TextBox)sender).Text.Replace(" ", "").Replace(".", ",");
         }
     }
 }
