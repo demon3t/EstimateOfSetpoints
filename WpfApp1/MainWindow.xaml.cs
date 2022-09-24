@@ -3,6 +3,7 @@ using HandyControl.Tools;
 using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace WpfApp1
 {
@@ -25,12 +26,12 @@ namespace WpfApp1
             ConfigHelper.Instance.SetLang("ru");
         }
 
+        #region TabControl #1
         private void MenuItem1_Click(object sender, RoutedEventArgs e)
         {
             transformer.type = Transformer.TypeTransformer.Double;
             SelectTypeTransformer.Content = "Двухобмоточный трансформатор";
         }
-
         private void MenuItem2_Click(object sender, RoutedEventArgs e)
         {
             transformer.type = Transformer.TypeTransformer.Split;
@@ -42,17 +43,31 @@ namespace WpfApp1
             SelectTypeTransformer.Content = "Трёххобмоточный трансформатор";
         }
 
+        #endregion
+
+
+
+
         private void TextBox_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
         {
-            if (!(Char.IsDigit(e.Text, 0) || e.Text == "." || e.Text == ",") && e.SystemText.Contains(" "))
+            if (!(Char.IsDigit(e.Text, 0) || e.Text == "." || e.Text == ","))
             {
                 e.Handled = true;
+                return;
+            }
+            if ((e.Text == "." || e.Text == ",") && (((TextBox)sender).Text.Contains(",") || ((TextBox)sender).Text.Contains(".")))
+            {
+                e.Handled = true;
+                return;
             }
         }
 
-        private void TextBox_FocusableChanged(object sender, DependencyPropertyChangedEventArgs e)
+        private void TextBox_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
-            ((TextBox)sender).Text.Replace(" ", "").Replace(".", ",");
+            if (e.Key == Key.Space)
+            {
+                e.Handled = true;
+            }
         }
     }
 }

@@ -35,42 +35,43 @@
                                 <TextBlock Text="Номинальная мощность, МВА"/>
                                 <TextBox Text="40" 
                                          PreviewTextInput="TextBox_PreviewTextInput"
-                                         IsKeyboardFocusedChanged="TextBox_FocusableChanged"/>
+                                         PreviewKeyDown="TextBox_PreviewKeyDown"/>
                                 
                                 <TextBlock Text="Номинальное напряжение стороны ВН, кВ"/>
                                 <TextBox Text="115"
                                          PreviewTextInput="TextBox_PreviewTextInput"
-                                         IsKeyboardFocusedChanged="TextBox_FocusableChanged"/>
+                                         PreviewKeyDown="TextBox_PreviewKeyDown"/>
                                 
                                 <TextBlock Text="Номинальное напряжение стороны СН (НН2), кВ"/>
                                 <TextBox Text="38,5"
                                          PreviewTextInput="TextBox_PreviewTextInput"
-                                         IsKeyboardFocusedChanged="TextBox_FocusableChanged"/>
+                                         PreviewKeyDown="TextBox_PreviewKeyDown"/>
                                 
                                 <TextBlock Text="Номинальное напряжение стороны НН, кВ"/>
                                 <TextBox Text="11"
                                          PreviewTextInput="TextBox_PreviewTextInput"
-                                         IsKeyboardFocusedChanged="TextBox_FocusableChanged"/>
+                                         PreviewKeyDown="TextBox_PreviewKeyDown"/>
                                 
                                 <TextBlock Text="Колличество ступеней регулирования ВН"/>
                                 <TextBox Text="19"
                                          PreviewTextInput="TextBox_PreviewTextInput"
-                                         IsKeyboardFocusedChanged="TextBox_FocusableChanged"/>
+                                         PreviewKeyDown="TextBox_PreviewKeyDown"/>
                                 
                                 <TextBlock Text="Шаг регулирования напряжения, %"/>
                                 <TextBox Text="1,78"
                                          PreviewTextInput="TextBox_PreviewTextInput"
-                                         IsKeyboardFocusedChanged="TextBox_FocusableChanged"/>
+                                         PreviewKeyDown="TextBox_PreviewKeyDown"/>
                                 
-                                <TextBlock Text="Колличество ступеней регулирования СН"/>
+                                <TextBlock Text="Колличество ступеней регулирования СН"
+                                           PreviewKeyDown="TextBox_PreviewKeyDown"/>
                                 <TextBox Text="5"
                                          PreviewTextInput="TextBox_PreviewTextInput"
-                                         IsKeyboardFocusedChanged="TextBox_FocusableChanged"/>
+                                         PreviewKeyDown="TextBox_PreviewKeyDown"/>
                                 
                                 <TextBlock Text="Шаг регулирования напряжения, %"/>
                                 <TextBox Text="2,5"
                                          PreviewTextInput="TextBox_PreviewTextInput"
-                                         IsKeyboardFocusedChanged="TextBox_FocusableChanged"/>
+                                         PreviewKeyDown="TextBox_PreviewKeyDown"/>
                                 
                             </StackPanel>
                         </StackPanel>
