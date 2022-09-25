@@ -125,6 +125,9 @@ namespace WpfApp1
             }
         }
 
+        private void TextBox_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
 
+        }
     }
 }

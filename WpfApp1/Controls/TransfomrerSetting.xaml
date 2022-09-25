@@ -1,0 +1,59 @@
+﻿<UserControl x:Class="WpfApp1.Controls.TransfomrerSetting"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WpfApp1.Controls"
+             xmlns:hc="https://handyorg.github.io/handycontrol"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             Background="White">
+    <Grid x:Name="DataTransform">
+        <ScrollViewer HorizontalAlignment="Left"  VerticalScrollBarVisibility="Visible" Width="{Binding ElementName=DataTransform, Path=ActualWidth}">
+
+            <StackPanel hc:TitleElement.TitleWidth="168" Margin="15,15,15,15">
+                <StackPanel x:Name="StackPanelDataTransform">
+                    <TextBlock Text="Тип трансформатора"/>
+                    <hc:SplitButton x:Name="SelectTypeTransformer" Width="{Binding ElementName=StackPanelDataTransform, Path=ActualWidth}"
+                                            Content="Трёхобмоточный трансформатор" HorizontalAlignment="Left" TextBlock.TextAlignment="Left">
+                        <hc:SplitButton.DropDownContent>
+                            <StackPanel>
+                                <MenuItem Header="Двухобмоточный трансформатор"/>
+                                <MenuItem Header="Двухобмоточный трансформатор с расщеплённой обмоткой стороны НН"/>
+                                <MenuItem Header="Трёхобмоточный трансформатор"/>
+                            </StackPanel>
+                        </hc:SplitButton.DropDownContent>
+                    </hc:SplitButton>
+
+                    <TextBlock Text="Номинальная мощность, МВА"/>
+                    <TextBox Text="40"/>
+
+                    <TextBlock Text="Номинальное напряжение стороны ВН, кВ"/>
+                    <TextBox Text="115"/>
+
+                    <TextBlock Text="Номинальное напряжение стороны СН (НН2), кВ"/>
+                    <TextBox Text="38,5"/>
+
+                    <TextBlock Text="Номинальное напряжение стороны НН, кВ"/>
+                    <TextBox Text="11"/>
+
+                    <TextBlock Text="Колличество ступеней регулирования ВН"/>
+                    <TextBox Text="19"/>
+
+                    <TextBlock Text="Шаг регулирования напряжения, %"/>
+                    <TextBox Text="1,78"/>
+
+                    <TextBlock Text="Колличество ступеней регулирования СН"/>
+                    <TextBox Text="5"/>
+
+                    <TextBlock Text="Шаг регулирования напряжения, %"/>
+                    <TextBox Text="2,5"/>
+
+
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+
+</UserControl>
+
