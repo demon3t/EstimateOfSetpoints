@@ -103,11 +103,14 @@ namespace WpfApp1
                 e.Handled = true;
                 return;
             }
-            if ((e.Text == "." || e.Text == ",") && (((TextBox)sender).Text.Contains(",") || ((TextBox)sender).Text.Contains(".")))
-            {
-                e.Handled = true;
-                return;
-            }
+
+            TextBox textBox = sender as TextBox;
+            if (textBox != null)
+                if ((e.Text == "." || e.Text == ",") && (textBox.Text.Contains(",") || textBox.Text.Contains(".")))
+                {
+                    e.Handled = true;
+                    return;
+                }
         }
         private void TextBox_PreviewTextInputNoDouble(object sender, System.Windows.Input.TextCompositionEventArgs e)
         {
