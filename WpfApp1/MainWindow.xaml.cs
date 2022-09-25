@@ -125,9 +125,11 @@ namespace WpfApp1
             }
         }
 
-        private void TextBox_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
+        private void TextBox_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
-
+            TextBox textBox = sender as TextBox;
+            if (textBox != null)
+                textBox.SelectAll();
         }
     }
 }

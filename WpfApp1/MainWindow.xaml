@@ -36,56 +36,63 @@
                                          PreviewTextInput="TextBox_PreviewTextInput"
                                          PreviewKeyDown="TextBox_PreviewKeyDown"
                                          TextChanged="TextBox_TextChanged"
-                                         IsEnabledChanged="TextBox_IsEnabledChanged"/>
+                                         GotKeyboardFocus="TextBox_GotKeyboardFocus"/>
 
                                 <TextBlock Text="Номинальное напряжение стороны ВН, кВ"
                                            TextAlignment="Left" TextWrapping="Wrap" FontWeight="Bold"/>
                                 <TextBox Text="115" x:Name="nominalHightVoltage"
                                          PreviewTextInput="TextBox_PreviewTextInput"
                                          PreviewKeyDown="TextBox_PreviewKeyDown"
-                                         TextChanged="TextBox_TextChanged"/>
+                                         TextChanged="TextBox_TextChanged"
+                                         GotKeyboardFocus="TextBox_GotKeyboardFocus"/>
 
                                 <TextBlock Text="Номинальное напряжение стороны СН (НН2), кВ"
                                            TextAlignment="Left" TextWrapping="Wrap" FontWeight="Bold"/>
                                 <TextBox Text="38,5" x:Name="nominalMediumVoltage"
                                          PreviewTextInput="TextBox_PreviewTextInput"
                                          PreviewKeyDown="TextBox_PreviewKeyDown"
-                                         TextChanged="TextBox_TextChanged"/>
+                                         TextChanged="TextBox_TextChanged"
+                                         GotKeyboardFocus="TextBox_GotKeyboardFocus"/>
 
                                 <TextBlock Text="Номинальное напряжение стороны НН, кВ"
                                            TextAlignment="Left" TextWrapping="Wrap" FontWeight="Bold"/>
                                 <TextBox Text="11" x:Name="nominalLowerVoltage"
                                          PreviewTextInput="TextBox_PreviewTextInput"
                                          PreviewKeyDown="TextBox_PreviewKeyDown"
-                                         TextChanged="TextBox_TextChanged"/>
+                                         TextChanged="TextBox_TextChanged"
+                                         GotKeyboardFocus="TextBox_GotKeyboardFocus"/>
 
                                 <TextBlock Text="Колличество ступеней регулирования ВН"
                                            TextAlignment="Left" TextWrapping="Wrap" FontWeight="Bold"/>
                                 <TextBox Text="19" x:Name="settingCountRPNHight"
                                          PreviewTextInput="TextBox_PreviewTextInputNoDouble"
                                          PreviewKeyDown="TextBox_PreviewKeyDown"
-                                         TextChanged="TextBox_TextChanged"/>
+                                         TextChanged="TextBox_TextChanged"
+                                         GotKeyboardFocus="TextBox_GotKeyboardFocus"/>
 
                                 <TextBlock Text="Шаг регулирования напряжения, %"
                                            TextAlignment="Left" TextWrapping="Wrap" FontWeight="Bold"/>
                                 <TextBox Text="1,78" x:Name="stepRPNHight"
                                          PreviewTextInput="TextBox_PreviewTextInput"
                                          PreviewKeyDown="TextBox_PreviewKeyDown"
-                                         TextChanged="TextBox_TextChanged"/>
+                                         TextChanged="TextBox_TextChanged"
+                                         GotKeyboardFocus="TextBox_GotKeyboardFocus"/>
 
                                 <TextBlock Text="Колличество ступеней регулирования СН"
                                            TextAlignment="Left" TextWrapping="Wrap" FontWeight="Bold"/>
                                 <TextBox Text="5" x:Name="settingCountRPNMedium"
                                          PreviewTextInput="TextBox_PreviewTextInputNoDouble"
                                          PreviewKeyDown="TextBox_PreviewKeyDown"
-                                         TextChanged="TextBox_TextChanged"/>
+                                         TextChanged="TextBox_TextChanged"
+                                         GotKeyboardFocus="TextBox_GotKeyboardFocus"/>
 
                                 <TextBlock Text="Шаг регулирования напряжения, %"
                                            TextAlignment="Left" TextWrapping="Wrap" FontWeight="Bold"/>
                                 <TextBox Text="2,5" x:Name="stepRPNMedium"
                                          PreviewTextInput="TextBox_PreviewTextInput"
                                          PreviewKeyDown="TextBox_PreviewKeyDown"
-                                         TextChanged="TextBox_TextChanged"/>
+                                         TextChanged="TextBox_TextChanged"
+                                         GotKeyboardFocus="TextBox_GotKeyboardFocus"/>
 
                             </StackPanel>
                         </StackPanel>
