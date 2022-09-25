@@ -19,7 +19,7 @@
                             <StackPanel x:Name="StackPanelDataTransform">
                                 <TextBlock Text="Тип трансформатора"/>
                                 <hc:SplitButton x:Name="SelectTypeTransformer" Width="{Binding ElementName=StackPanelDataTransform, Path=ActualWidth}"
-                                            Content="Двухобмоточный трансформатор с расщеплённой обмоткой стороны НН" HorizontalAlignment="Left">
+                                            Content="Трёхобмоточный трансформатор" HorizontalAlignment="Left">
                                     <hc:SplitButton.DropDownContent>
                                         <StackPanel>
                                             <MenuItem Header="Двухобмоточный трансформатор"
@@ -54,7 +54,7 @@
                                 
                                 <TextBlock Text="Колличество ступеней регулирования ВН"/>
                                 <TextBox Text="19"
-                                         PreviewTextInput="TextBox_PreviewTextInput"
+                                         PreviewTextInput="TextBox_PreviewTextInputNoDouble"
                                          PreviewKeyDown="TextBox_PreviewKeyDown"/>
                                 
                                 <TextBlock Text="Шаг регулирования напряжения, %"/>
@@ -62,14 +62,13 @@
                                          PreviewTextInput="TextBox_PreviewTextInput"
                                          PreviewKeyDown="TextBox_PreviewKeyDown"/>
                                 
-                                <TextBlock Text="Колличество ступеней регулирования СН"
-                                           PreviewKeyDown="TextBox_PreviewKeyDown"/>
-                                <TextBox Text="5"
-                                         PreviewTextInput="TextBox_PreviewTextInput"
+                                <TextBlock Text="Колличество ступеней регулирования СН"/>
+                                <TextBox Text="5" x:Name="DataTransformer_MidleItem1"
+                                         PreviewTextInput="TextBox_PreviewTextInputNoDouble"
                                          PreviewKeyDown="TextBox_PreviewKeyDown"/>
                                 
                                 <TextBlock Text="Шаг регулирования напряжения, %"/>
-                                <TextBox Text="2,5"
+                                <TextBox Text="2,5" x:Name="DataTransformer_MidleItem2"
                                          PreviewTextInput="TextBox_PreviewTextInput"
                                          PreviewKeyDown="TextBox_PreviewKeyDown"/>
                                 

@@ -14,7 +14,7 @@ namespace WpfApp1
     {
         private Transformer transformer = new Transformer()
         {
-            type = Transformer.TypeTransformer.Double,
+            type = Transformer.TypeTransformer.Triple,
             nominalPower = 40,
             nominalHightVoltage = 115,
             nominalMediumVoltage = 38.5,
@@ -31,16 +31,22 @@ namespace WpfApp1
         {
             transformer.type = Transformer.TypeTransformer.Double;
             SelectTypeTransformer.Content = "Двухобмоточный трансформатор";
+            DataTransformer_MidleItem1.IsEnabled = false;
+            DataTransformer_MidleItem2.IsEnabled = false;
         }
         private void MenuItem2_Click(object sender, RoutedEventArgs e)
         {
             transformer.type = Transformer.TypeTransformer.Split;
             SelectTypeTransformer.Content = "Двухобмоточный трансформатор с расщеплённой обмоткой стороны НН";
+            DataTransformer_MidleItem1.IsEnabled = false;
+            DataTransformer_MidleItem2.IsEnabled = false;
         }
         private void MenuItem3_Click(object sender, RoutedEventArgs e)
         {
             transformer.type = Transformer.TypeTransformer.Triple;
-            SelectTypeTransformer.Content = "Трёххобмоточный трансформатор";
+            SelectTypeTransformer.Content = "Трёхобмоточный трансформатор";
+            DataTransformer_MidleItem1.IsEnabled = true;
+            DataTransformer_MidleItem2.IsEnabled = true;
         }
 
         #endregion
@@ -61,7 +67,14 @@ namespace WpfApp1
                 return;
             }
         }
-
+        private void TextBox_PreviewTextInputNoDouble(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        {
+            if (!Char.IsDigit(e.Text, 0))
+            {
+                e.Handled = true;
+                return;
+            }
+        }
         private void TextBox_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
             if (e.Key == Key.Space)
