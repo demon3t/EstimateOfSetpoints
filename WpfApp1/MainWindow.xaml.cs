@@ -1,4 +1,5 @@
 ﻿using Calculation;
+using Calculation.Interfaces;
 using HandyControl.Tools;
 using System;
 using System.Windows;
@@ -12,14 +13,6 @@ namespace WpfApp1
     /// </summary>
     public partial class MainWindow : Window
     {
-        private Transformer transformer = new Transformer()
-        {
-            type = Transformer.TypeTransformer.Triple,
-            nominalPower = 40,
-            nominalHightVoltage = 115,
-            nominalMediumVoltage = 38.5,
-            nominalLowerVoltage = 11,
-        };
         public MainWindow()
         {
             InitializeComponent();
@@ -29,24 +22,73 @@ namespace WpfApp1
         #region TabControl #1
         private void MenuItem1_Click(object sender, RoutedEventArgs e)
         {
-            transformer.type = Transformer.TypeTransformer.Double;
+            Transformer.type = Transformer.TypeTransformer.Double;
             SelectTypeTransformer.Content = "Двухобмоточный трансформатор";
-            DataTransformer_MidleItem1.IsEnabled = false;
-            DataTransformer_MidleItem2.IsEnabled = false;
+            settingCountRPNMedium.IsEnabled = false;
+            stepRPNMedium.IsEnabled = false;
         }
         private void MenuItem2_Click(object sender, RoutedEventArgs e)
         {
-            transformer.type = Transformer.TypeTransformer.Split;
+            Transformer.type = Transformer.TypeTransformer.Split;
             SelectTypeTransformer.Content = "Двухобмоточный трансформатор с расщеплённой обмоткой стороны НН";
-            DataTransformer_MidleItem1.IsEnabled = false;
-            DataTransformer_MidleItem2.IsEnabled = false;
+            settingCountRPNMedium.IsEnabled = false;
+            stepRPNMedium.IsEnabled = false;
         }
         private void MenuItem3_Click(object sender, RoutedEventArgs e)
         {
-            transformer.type = Transformer.TypeTransformer.Triple;
+            Transformer.type = Transformer.TypeTransformer.Triple;
             SelectTypeTransformer.Content = "Трёхобмоточный трансформатор";
-            DataTransformer_MidleItem1.IsEnabled = true;
-            DataTransformer_MidleItem2.IsEnabled = true;
+            settingCountRPNMedium.IsEnabled = true;
+            stepRPNMedium.IsEnabled = true;
+        }
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (!double.TryParse(((TextBox)sender).Text, out double result))
+                return;
+
+            switch (((TextBox)sender).Name)
+            {
+                case "nominalPower":
+                    {
+                        Transformer.nominalPower = result;
+                        break;
+                    }
+                case "nominalHightVoltage":
+                    {
+                        Transformer.nominalHightVoltage = result;
+                        break;
+                    }
+                case "nominalMediumVoltage":
+                    {
+                        Transformer.nominalMediumVoltage = result;
+                        break;
+                    }
+                case "nominalLowerVoltage":
+                    {
+                        Transformer.nominalLowerVoltage = result;
+                        break;
+                    }
+                case "settingCountRPNHight":
+                    {
+                        Transformer.settingCountRPNHight = (int)result;
+                        break;
+                    }
+                case "stepRPNHight":
+                    {
+                        Transformer.stepRPNHight = result;
+                        break;
+                    }
+                case "settingCountRPNMedium":
+                    {
+                        Transformer.settingCountRPNMedium = (int)result;
+                        break;
+                    }
+                case "stepRPNMedium":
+                    {
+                        Transformer.stepRPNMedium = result;
+                        break;
+                    }
+            }
         }
 
         #endregion
@@ -82,5 +124,7 @@ namespace WpfApp1
                 e.Handled = true;
             }
         }
+
+
     }
 }

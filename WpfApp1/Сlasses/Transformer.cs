@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Calculation
 {
-    public class Transformer
+    public static class Transformer
     {
         public enum TypeTransformer
         {
@@ -15,35 +15,21 @@ namespace Calculation
             Triple = 3
         }
 
-        public Transformer(double _nominalPower, double _nominalHightVoltage, double _nominalMediumVoltage, double _nominalLowerVoltage,
-            int _settingCountRPNHight, double _stepRPNHight, int _settingCountRPNMedium, double _stepRPNMedium,
-            TypeTransformer _type)
+        static Transformer()
         {
-            nominalPower = _nominalPower;
-            nominalHightVoltage = _nominalHightVoltage;
-            nominalMediumVoltage = _nominalMediumVoltage;
-            nominalLowerVoltage = _nominalLowerVoltage;
-            settingCountRPNHight = _settingCountRPNHight;
-            stepRPNHight = _stepRPNHight;
-            settingCountRPNMedium = _settingCountRPNMedium;
-            stepRPNMedium = _stepRPNMedium;
-            type = _type;
+
         }
-        public Transformer()
-        {
-            
-        }
-        public TypeTransformer type { get; set; }
+        public static TypeTransformer type { get; set; }
 
-        public double nominalPower { get; set; }
-        public double nominalHightVoltage { get; set; }
-        public double nominalMediumVoltage { get; set; }
-        public double nominalLowerVoltage { get; set; }
+        public static double nominalPower { get; set; } = 40;
+        public static double nominalHightVoltage { get; set; } = 115;
+        public static double nominalMediumVoltage { get; set; } = 38.5;
+        public static double nominalLowerVoltage { get; set; } = 11;
 
-        public int settingCountRPNHight { get; set; }
-        public double stepRPNHight { get; set; }
+        public static int settingCountRPNHight { get; set; } = 19;
+        public static double stepRPNHight { get; set; } = 1.78;
 
-        public int settingCountRPNMedium { get; set; }
-        public double stepRPNMedium { get; set; }
+        public static int settingCountRPNMedium { get; set; } = 5;
+        public static double stepRPNMedium { get; set; } = 2.5;
     }
 }

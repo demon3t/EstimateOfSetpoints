@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WpfApp1"
         xmlns:hc="https://handyorg.github.io/handycontrol"
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
         mc:Ignorable="d"
@@ -31,55 +30,122 @@
                                         </StackPanel>
                                     </hc:SplitButton.DropDownContent>
                                 </hc:SplitButton>
-                                
+
                                 <TextBlock Text="Номинальная мощность, МВА"/>
-                                <TextBox Text="40" 
+                                <TextBox Text="40" x:Name="nominalPower"
                                          PreviewTextInput="TextBox_PreviewTextInput"
-                                         PreviewKeyDown="TextBox_PreviewKeyDown"/>
-                                
+                                         PreviewKeyDown="TextBox_PreviewKeyDown"
+                                         TextChanged="TextBox_TextChanged"/>
+
                                 <TextBlock Text="Номинальное напряжение стороны ВН, кВ"/>
-                                <TextBox Text="115"
+                                <TextBox Text="115" x:Name="nominalHightVoltage"
                                          PreviewTextInput="TextBox_PreviewTextInput"
-                                         PreviewKeyDown="TextBox_PreviewKeyDown"/>
-                                
+                                         PreviewKeyDown="TextBox_PreviewKeyDown"
+                                         TextChanged="TextBox_TextChanged"/>
+
                                 <TextBlock Text="Номинальное напряжение стороны СН (НН2), кВ"/>
-                                <TextBox Text="38,5"
+                                <TextBox Text="38,5" x:Name="nominalMediumVoltage"
                                          PreviewTextInput="TextBox_PreviewTextInput"
-                                         PreviewKeyDown="TextBox_PreviewKeyDown"/>
-                                
+                                         PreviewKeyDown="TextBox_PreviewKeyDown"
+                                         TextChanged="TextBox_TextChanged"/>
+
                                 <TextBlock Text="Номинальное напряжение стороны НН, кВ"/>
-                                <TextBox Text="11"
+                                <TextBox Text="11" x:Name="nominalLowerVoltage"
                                          PreviewTextInput="TextBox_PreviewTextInput"
-                                         PreviewKeyDown="TextBox_PreviewKeyDown"/>
-                                
+                                         PreviewKeyDown="TextBox_PreviewKeyDown"
+                                         TextChanged="TextBox_TextChanged"/>
+
                                 <TextBlock Text="Колличество ступеней регулирования ВН"/>
-                                <TextBox Text="19"
+                                <TextBox Text="19" x:Name="settingCountRPNHight"
                                          PreviewTextInput="TextBox_PreviewTextInputNoDouble"
-                                         PreviewKeyDown="TextBox_PreviewKeyDown"/>
-                                
+                                         PreviewKeyDown="TextBox_PreviewKeyDown"
+                                         TextChanged="TextBox_TextChanged"/>
+
                                 <TextBlock Text="Шаг регулирования напряжения, %"/>
-                                <TextBox Text="1,78"
+                                <TextBox Text="1,78" x:Name="stepRPNHight"
                                          PreviewTextInput="TextBox_PreviewTextInput"
-                                         PreviewKeyDown="TextBox_PreviewKeyDown"/>
-                                
+                                         PreviewKeyDown="TextBox_PreviewKeyDown"
+                                         TextChanged="TextBox_TextChanged"/>
+
                                 <TextBlock Text="Колличество ступеней регулирования СН"/>
-                                <TextBox Text="5" x:Name="DataTransformer_MidleItem1"
+                                <TextBox Text="5" x:Name="settingCountRPNMedium"
                                          PreviewTextInput="TextBox_PreviewTextInputNoDouble"
-                                         PreviewKeyDown="TextBox_PreviewKeyDown"/>
-                                
+                                         PreviewKeyDown="TextBox_PreviewKeyDown"
+                                         TextChanged="TextBox_TextChanged"/>
+
                                 <TextBlock Text="Шаг регулирования напряжения, %"/>
-                                <TextBox Text="2,5" x:Name="DataTransformer_MidleItem2"
+                                <TextBox Text="2,5" x:Name="stepRPNMedium"
                                          PreviewTextInput="TextBox_PreviewTextInput"
-                                         PreviewKeyDown="TextBox_PreviewKeyDown"/>
-                                
+                                         PreviewKeyDown="TextBox_PreviewKeyDown"
+                                         TextChanged="TextBox_TextChanged"/>
+
                             </StackPanel>
                         </StackPanel>
                     </ScrollViewer>
                 </Grid>
             </TabItem>
             <TabItem Header="Данные токов">
-                <Grid>
+                <Grid x:Name="DataAmperage">
+                    <ScrollViewer HorizontalAlignment="Left"  VerticalScrollBarVisibility="Visible" Width="{Binding ElementName=DataAmperage, Path=ActualWidth}">
 
+                        <StackPanel hc:TitleElement.TitleWidth="168" Margin="15,15,15,15">
+                            <StackPanel>
+                                <TextBlock Text="Коэффициенты трансформации ТТ сторон трансформатора"/>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*" x:Name="CD1"/>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="ВН" Grid.Column="0" Width="{Binding ElementName=CD1, Path=ActualWidth}"/>
+                                    <TextBlock Text="СН(НН2)" Grid.Column="1" Width="{Binding ElementName=CD1, Path=ActualWidth}"/>
+                                    <TextBlock Text="НН" Grid.Column="2" Width="{Binding ElementName=CD1, Path=ActualWidth}"/>
+                                </Grid>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox Text="80" Grid.Column="0" Width="{Binding ElementName=CD2, Path=ActualWidth}"/>
+                                    <TextBox Text="300" Grid.Column="1" Width="{Binding ElementName=CD2, Path=ActualWidth}"/>
+                                    <TextBox Text="600" Grid.Column="2" Width="{Binding ElementName=CD2, Path=ActualWidth}"/>
+                                </Grid>
+                                <TextBlock Text=" "/>
+                                <TextBlock Text="Максимальные погрешности ТТ сторон трансформатора, рассчитанные в соответствии с РД 153-34.0-35.301-2002." TextWrapping="Wrap"/>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*" x:Name="CD0"/>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="Emax" Grid.Column="0" Width="{Binding ElementName=CD0, Path=ActualWidth}"/>
+                                    <TextBlock Text="Emin" Grid.Column="1" Width="{Binding ElementName=CD0, Path=ActualWidth}"/>
+                                    <TextBlock Text="E0.5" Grid.Column="2" Width="{Binding ElementName=CD0, Path=ActualWidth}"/>
+                                    <TextBlock Text="Eраб.макс" Grid.Column="3" Width="{Binding ElementName=CD0, Path=ActualWidth}"/>
+                                    <TextBlock Text="E1.5" Grid.Column="4" Width="{Binding ElementName=CD0, Path=ActualWidth}"/>
+                                    <Grid/>
+                                </Grid>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox Text="0.1" Grid.Column="0"/>
+                                    <TextBox Text="0.1" Grid.Column="1" />
+                                    <TextBox Text="0.1" Grid.Column="2"/>
+                                    <TextBox Text="0.1" Grid.Column="3"/>
+                                    <TextBox Text="0.1" Grid.Column="4"/>
+                                    <Grid/>
+                                </Grid>
+                            </StackPanel>
+                        </StackPanel>
+                    </ScrollViewer>
                 </Grid>
             </TabItem>
             <TabItem Header="Данные ТТ">
