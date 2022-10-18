@@ -1,15 +1,23 @@
-﻿using Calculation;
-using Calculation.Interfaces;
-using HandyControl.Tools;
+﻿using HandyControl.Tools;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 
-namespace WpfApp1
+namespace Program
 {
     /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
+    /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
@@ -24,7 +32,7 @@ namespace WpfApp1
         #region Переключение типа трансформатора
         private void MenuItem1_Click(object sender, RoutedEventArgs e)
         {
-            Transformer.type = Transformer.TypeTransformer.Double;
+            TransformerData.type = TransformerData.TypeTransformer.Double;
             SelectTypeTransformer.Content = "Двухобмоточный трансформатор";
             nominalMediumVoltage.IsEnabled = false;
             settingCountRPNMedium.IsEnabled = false;
@@ -32,7 +40,7 @@ namespace WpfApp1
         }
         private void MenuItem2_Click(object sender, RoutedEventArgs e)
         {
-            Transformer.type = Transformer.TypeTransformer.Split;
+            TransformerData.type = TransformerData.TypeTransformer.Split;
             SelectTypeTransformer.Content = "Двухобмоточный трансформатор с расщеплённой обмоткой стороны НН";
             nominalMediumVoltage.IsEnabled = true;
             settingCountRPNMedium.IsEnabled = false;
@@ -40,15 +48,14 @@ namespace WpfApp1
         }
         private void MenuItem3_Click(object sender, RoutedEventArgs e)
         {
-            Transformer.type = Transformer.TypeTransformer.Triple;
+            TransformerData.type = TransformerData.TypeTransformer.Triple;
             SelectTypeTransformer.Content = "Трёхобмоточный трансформатор";
             nominalMediumVoltage.IsEnabled = true;
             settingCountRPNMedium.IsEnabled = true;
             stepRPNMedium.IsEnabled = true;
         }
         #endregion
-
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void TextBox_TextChanged_1(object sender, TextChangedEventArgs e)
         {
             if (!double.TryParse(((TextBox)sender).Text, out double result))
                 return;
@@ -98,6 +105,7 @@ namespace WpfApp1
             }
         }
 
+
         private bool ChckReadyList_1()
         {
             if (nominalPower.Text.Length < 1)
@@ -129,6 +137,60 @@ namespace WpfApp1
 
         #endregion
 
+
+        #region TabControl #2
+
+        private void TextBox_TextChanged_2(object sender, TextChangedEventArgs e)
+        {
+            if (!double.TryParse(((TextBox)sender).Text, out double result))
+                return;
+
+
+            switch (((TextBox)sender).Name)
+            {
+                case "nominalPower":
+                    {
+                        TransformerData.nominalPower = result;
+                        break;
+                    }
+                case "nominalHightVoltage":
+                    {
+                        TransformerData.nominalHightVoltage = result;
+                        break;
+                    }
+                case "nominalMediumVoltage":
+                    {
+                        TransformerData.nominalMediumVoltage = result;
+                        break;
+                    }
+                case "nominalLowerVoltage":
+                    {
+                        TransformerData.nominalLowerVoltage = result;
+                        break;
+                    }
+                case "settingCountRPNHight":
+                    {
+                        TransformerData.settingCountRPNHight = (int)result;
+                        break;
+                    }
+                case "stepRPNHight":
+                    {
+                        TransformerData.stepRPNHight = result;
+                        break;
+                    }
+                case "settingCountRPNMedium":
+                    {
+                        TransformerData.settingCountRPNMedium = (int)result;
+                        break;
+                    }
+                case "stepRPNMedium":
+                    {
+                        TransformerData.stepRPNMedium = result;
+                        break;
+                    }
+            }
+        }
+        #endregion
 
 
 
@@ -167,7 +229,7 @@ namespace WpfApp1
                 e.Handled = true;
             }
 
-        } 
+        }
 
         private void TextBox_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e) // выделяет всё содержимое записанное в Текстбоксе
         {
