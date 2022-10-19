@@ -6,15 +6,56 @@
         xmlns:hc="https://handyorg.github.io/handycontrol"
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
         mc:Ignorable="d"
-        Title="MainWindow" Height="520" Width="525">
+        x:Name="MW"
+        Title="MainWindow" MaxHeight="570" MaxWidth="530"
+                           MinHeight="570" MinWidth="530">
+    
     <Grid>
+        <ComboBox Name="phonesList" Height="30" Width="85" VerticalAlignment="Top" HorizontalAlignment="Right"
+                  Panel.ZIndex="1">
+            <TextBlock
+                PreviewMouseLeftButtonDown="TextBlock_PreviewMouseLeftButtonDown">
+                0.1
+            </TextBlock>
+            <TextBlock
+                PreviewMouseLeftButtonDown="TextBlock_PreviewMouseLeftButtonDown_1">
+                0.01
+            </TextBlock>
+            <TextBlock
+                PreviewMouseLeftButtonDown="TextBlock_PreviewMouseLeftButtonDown_2">
+                0.001
+            </TextBlock>
+            <TextBlock
+                PreviewMouseLeftButtonDown="TextBlock_PreviewMouseLeftButtonDown_3">
+                0.0001
+            </TextBlock>
+        </ComboBox>
         <TabControl>
-            <TabItem Header="Данные трансформатора">
+            <TabItem Header="Данные трансформатора"
+                     PreviewMouseLeftButtonDown="TabItem1_MouseLeftButtonDown">
+                
                 <Grid x:Name="DataTransform">
                     <ScrollViewer HorizontalAlignment="Left"  VerticalScrollBarVisibility="Visible" Width="{Binding ElementName=DataTransform, Path=ActualWidth}">
 
                         <StackPanel hc:TitleElement.TitleWidth="168" Margin="15,15,15,15">
                             <StackPanel x:Name="StackPanelDataTransform">
+
+
+                                <TextBlock Text="Применяемый блок защиты" FontWeight="Bold"/>
+                                <hc:SplitButton x:Name="SelectTypeBMRZ" Width="{Binding ElementName=StackPanelDataTransform, Path=ActualWidth}"
+                                            Content="БМРЗ-ТД-10(11,00,01)-30-21" TextBlock.TextAlignment="Left" hc:TextBlockAttach.AutoTooltip="False">
+                                    <hc:SplitButton.DropDownContent>
+                                        <StackPanel>
+                                            <MenuItem Header="БМРЗ-ТД-10(11,00,01)-30-21"
+                                                  Click="MenuItem_Click"/>
+                                            <MenuItem Header="БМРЗ-ТД-12(13,02,03)-20-21"
+                                                  Click="MenuItem_Click_1"/>
+                                        </StackPanel>
+                                    </hc:SplitButton.DropDownContent>
+                                </hc:SplitButton>
+
+                                <Separator Height="5"/>
+
                                 <TextBlock Text="Тип трансформатора" FontWeight="Bold"/>
                                 <hc:SplitButton x:Name="SelectTypeTransformer" Width="{Binding ElementName=StackPanelDataTransform, Path=ActualWidth}"
                                             Content="Трёхобмоточный трансформатор" TextBlock.TextAlignment="Left" hc:TextBlockAttach.AutoTooltip="False">
@@ -99,7 +140,8 @@
                     </ScrollViewer>
                 </Grid>
             </TabItem>
-            <TabItem Header="Данные токов на выходе и ТТ ">
+            <TabItem Header="Данные токов на выходе и ТТ "
+                     PreviewMouseLeftButtonDown="TabItem2_MouseLeftButtonDown_1">
                 <Grid x:Name="DataAmperage">
                     <ScrollViewer HorizontalAlignment="Left"  VerticalScrollBarVisibility="Visible" Width="{Binding ElementName=DataAmperage, Path=ActualWidth}">
 
@@ -139,8 +181,8 @@
                                              TextChanged="TextBox_TextChanged_2"
                                              GotKeyboardFocus="TextBox_GotKeyboardFocus"/>
                                 </Grid>
+                                <Separator Height="5"/>
 
-                                <TextBlock Text=" " Height="8"/>
                                 <TextBlock Text="Максимальные погрешности ТТ сторон трансформатора, рассчитанные в соответствии с РД 153-34.0-35.301-2002."
                                            TextWrapping="Wrap" FontWeight="Bold"/>
                                 <Grid>
@@ -181,7 +223,7 @@
                                              PreviewKeyDown="TextBox_PreviewKeyDown"
                                              TextChanged="TextBox_TextChanged_2"
                                              GotKeyboardFocus="TextBox_GotKeyboardFocus"/>
-                                    <TextBox Text="0,1" Grid.Column="3" TextAlignment="Center" x:Name="_Erabmaix"
+                                    <TextBox Text="0,1" Grid.Column="3" TextAlignment="Center" x:Name="_Erabmax"
                                              PreviewTextInput="TextBox_PreviewTextInput"
                                              PreviewKeyDown="TextBox_PreviewKeyDown"
                                              TextChanged="TextBox_TextChanged_2"
@@ -194,13 +236,22 @@
                                     <Grid/>
                                 </Grid>
 
-                                <TextBlock Text=" " Height="5"/>
-                                <TextBlock Text="Токи КЗ на выводах приведённые к высшей стороне:"
+                                <Separator Height="5"/>
+                                <TextBlock Text="Токи КЗ на выводах приведённые к низшей стороне/высшей стороне:"
                                            TextAlignment="Left" TextWrapping="Wrap" FontWeight="Bold"/>
                                 <TextBlock Text="Максимальный ток КЗ на стороне ВН, А"
                                            TextAlignment="Left" TextWrapping="Wrap" FontWeight="DemiBold"/>
                                 <Grid>
-                                    <TextBox Text="4427" x:Name="_MaxCurrentHightKZ"
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox Text="4427" x:Name="_MaxCurrentHightKZ" Grid.Column="0" TextAlignment="Center"
+                                             PreviewTextInput="TextBox_PreviewTextInput"
+                                             PreviewKeyDown="TextBox_PreviewKeyDown"
+                                             TextChanged="TextBox_TextChanged_2"
+                                             GotKeyboardFocus="TextBox_GotKeyboardFocus"/>
+                                    <TextBox Text="4427" x:Name="_MaxCurrentHightKZ_ToHight" Grid.Column="1" TextAlignment="Center"
                                              PreviewTextInput="TextBox_PreviewTextInput"
                                              PreviewKeyDown="TextBox_PreviewKeyDown"
                                              TextChanged="TextBox_TextChanged_2"
@@ -210,7 +261,16 @@
                                 <TextBlock Text="Максимальный ток КЗ на стороне СН (НН2), А"
                                            TextAlignment="Left" TextWrapping="Wrap" FontWeight="DemiBold"/>
                                 <Grid>
-                                    <TextBox Text="4514" x:Name="_MaxCurrentMildleKZ"
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox Text="4514" x:Name="_MaxCurrentMildleKZ" Grid.Column="0" TextAlignment="Center"
+                                             PreviewTextInput="TextBox_PreviewTextInput"
+                                             PreviewKeyDown="TextBox_PreviewKeyDown"
+                                             TextChanged="TextBox_TextChanged_2"
+                                             GotKeyboardFocus="TextBox_GotKeyboardFocus"/>
+                                    <TextBox Text="1729" x:Name="_MaxCurrentMildleKZ_ToHight" Grid.Column="1" TextAlignment="Center"
                                              PreviewTextInput="TextBox_PreviewTextInput"
                                              PreviewKeyDown="TextBox_PreviewKeyDown"
                                              TextChanged="TextBox_TextChanged_2"
@@ -220,7 +280,16 @@
                                 <TextBlock Text="Максимальный ток КЗ на стороне НН, А"
                                            TextAlignment="Left" TextWrapping="Wrap" FontWeight="DemiBold"/>
                                 <Grid>
-                                    <TextBox Text="14177" x:Name="_MaxCurrentLowerKZ"
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox Text="14177" x:Name="_MaxCurrentLowerKZ" Grid.Column="0" TextAlignment="Center"
+                                             PreviewTextInput="TextBox_PreviewTextInput"
+                                             PreviewKeyDown="TextBox_PreviewKeyDown"
+                                             TextChanged="TextBox_TextChanged_2"
+                                             GotKeyboardFocus="TextBox_GotKeyboardFocus"/>
+                                    <TextBox Text="1541" x:Name="_MaxCurrentLowerKZ_ToHight" Grid.Column="1" TextAlignment="Center"
                                              PreviewTextInput="TextBox_PreviewTextInput"
                                              PreviewKeyDown="TextBox_PreviewKeyDown"
                                              TextChanged="TextBox_TextChanged_2"
@@ -236,23 +305,24 @@
                                              TextChanged="TextBox_TextChanged_2"
                                              GotKeyboardFocus="TextBox_GotKeyboardFocus"/>
                                 </Grid>
+                                <Separator Height="5"/>
+                                <CheckBox Content="ТСН в зоне зашиты" x:Name="ProtectTSN"
+                                          Click="CheckBox_Click"/>
                                 <TextBlock Text=" " Height="5"/>
-                                <CheckBox Content="Учитывать ТСН"/>
-                                <TextBlock Text=" " Height="5"/>
-                                <TextBlock Text="Минимальный ток внешнего КЗ, А"
+                                <TextBlock Text="Максимальных ток КЗ за ТСН, А"
                                            TextAlignment="Left" TextWrapping="Wrap" FontWeight="DemiBold"/>
                                 <Grid>
-                                    <TextBox Text="392" x:Name="_5"
+                                    <TextBox Text="0" x:Name="_MaxCurrentTSNKZ" IsEnabled="False"
                                              PreviewTextInput="TextBox_PreviewTextInput"
                                              PreviewKeyDown="TextBox_PreviewKeyDown"
                                              TextChanged="TextBox_TextChanged_2"
                                              GotKeyboardFocus="TextBox_GotKeyboardFocus"/>
                                 </Grid>
                                 <TextBlock Text=" " Height="5"/>
-                                <TextBlock Text="Минимальный ток внешнего КЗ, А"
+                                <TextBlock Text="Максимальный рабочий ток ТСН, А"
                                            TextAlignment="Left" TextWrapping="Wrap" FontWeight="DemiBold"/>
                                 <Grid>
-                                    <TextBox Text="392" x:Name="_6"
+                                    <TextBox Text="0" x:Name="_WorkCurrentTSN" IsEnabled="False"
                                              PreviewTextInput="TextBox_PreviewTextInput"
                                              PreviewKeyDown="TextBox_PreviewKeyDown"
                                              TextChanged="TextBox_TextChanged_2"
@@ -263,42 +333,107 @@
                     </ScrollViewer>
                 </Grid>
             </TabItem>
-            <TabItem Header="Результаты">
+            <TabItem Header="Результаты"
+                     x:Name="TabItem_Result"
+                     PreviewMouseLeftButtonDown="TabItem3_Result_PreviewMouseLeftButtonDown">
                 <Grid>
                     <TabControl>
-                        <TabItem Header="Номинальные токи и ПТН">
+                        <TabItem Header="Номинальные токи, ПТН и ДТО">
                             <Grid x:Name="NominalCurrents_PNT">
                                 <ScrollViewer HorizontalAlignment="Left"  VerticalScrollBarVisibility="Visible" Width="{Binding ElementName=DataTransform, Path=ActualWidth}">
 
                                     <StackPanel hc:TitleElement.TitleWidth="168" Margin="15,15,15,15">
                                         <StackPanel>
-                                                <TextBlock Text="Номинальный токи сторон:" Height="20" Padding="2"
+                                            <TextBlock Text="Номинальный токи сторон:" Height="20" Padding="0,2"
                                                                TextAlignment="Left" TextWrapping="Wrap" FontWeight="Bold"/>
                                             <Grid>
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="2*"/>
                                                     <ColumnDefinition Width="1*"/>
                                                 </Grid.ColumnDefinitions>
-                                                
+
                                                 <StackPanel Grid.Column="0" >
-                                                    <TextBlock Text="Номинальный ток стороны ВН, А" Height="30" Padding="6" Background="AliceBlue"
+                                                    <TextBlock Text="Номинальный ток стороны ВН, А" Height="30" Padding="6,6" Background="AliceBlue"
                                                                TextAlignment="Left" TextWrapping="Wrap" FontWeight="DemiBold"/>
-                                                    <TextBlock Text="Номинальный ток стороны СН(НН2), А" Height="30" Padding="6"
+                                                    <TextBlock Text="Номинальный ток стороны СН(НН2), А" Height="30" Padding="6,6" x:Name="Middle1"
                                                                TextAlignment="Left" TextWrapping="Wrap" FontWeight="DemiBold"/>
-                                                    <TextBlock Text="Номинальный ток стороны НН, А" Height="30" Padding="6" Background="AliceBlue"
+                                                    <TextBlock Text="Номинальный ток стороны НН, А" Height="30" Padding="6,6" Background="AliceBlue"
                                                                TextAlignment="Left" TextWrapping="Wrap" FontWeight="DemiBold"/>
 
                                                 </StackPanel>
 
                                                 <StackPanel Grid.Column="1">
-                                                    <TextBox  Text="0" x:Name="_MaxCurrentHight" IsReadOnly="True" Background="AliceBlue"/>
-                                                    <TextBox  Text="0" x:Name="_MaxCurrentMildle" IsReadOnly="True"/>
-                                                    <TextBox  Text="0" x:Name="_MaxCurrentLower" IsReadOnly="True" Background="AliceBlue"/>
+                                                    <TextBox  Text="0" x:Name="_MaxCurrentHight" IsReadOnly="True"
+                                                              Background="AliceBlue" TextAlignment="Center"/>
+                                                    <TextBox  Text="0" x:Name="_MaxCurrentMildle" IsReadOnly="True"
+                                                              TextAlignment="Center"/>
+                                                    <TextBox  Text="0" x:Name="_MaxCurrentLower" IsReadOnly="True"
+                                                              Background="AliceBlue" TextAlignment="Center"/>
                                                 </StackPanel>
-
                                             </Grid>
 
+                                            <Separator Height="5"/>
                                             
+                                            <TextBlock Text="Выбор ПТН:" Height="20" Padding="0,2"
+                                                               TextAlignment="Left" TextWrapping="Wrap" FontWeight="Bold"/>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="2*"/>
+                                                    <ColumnDefinition Width="1*"/>
+                                                </Grid.ColumnDefinitions>
+
+                                                <StackPanel Grid.Column="0" >
+                                                    <TextBlock Text="Номинальный ток ПТН стороны ВН, А" Height="30" Padding="6,6" Background="AliceBlue"
+                                                               TextAlignment="Left" TextWrapping="Wrap" FontWeight="DemiBold"/>
+                                                    <TextBlock Text="Номинальный ток ПТН стороны СН (НН2), А" Height="30" Padding="6,6" x:Name="Middle2"
+                                                               TextAlignment="Left" TextWrapping="Wrap" FontWeight="DemiBold"/>
+                                                    <TextBlock Text="Номинальный ток ПТН стороны НН, А" Height="30" Padding="6,6" Background="AliceBlue"
+                                                               TextAlignment="Left" TextWrapping="Wrap" FontWeight="DemiBold"/>
+
+                                                </StackPanel>
+
+                                                <StackPanel Grid.Column="1">
+                                                    <TextBox  Text="0"  IsReadOnly="True" x:Name="_PTNHigth"
+                                                              Background="AliceBlue" TextAlignment="Center"/>
+                                                    <TextBox  Text="0"  IsReadOnly="True" x:Name="_PTNMedium"
+                                                              TextAlignment="Center"/>
+                                                    <TextBox  Text="0"  IsReadOnly="True" x:Name="_PTNLower"
+                                                              Background="AliceBlue" TextAlignment="Center"/>
+                                                </StackPanel>
+                                            </Grid>
+
+                                            <Separator Height="5"/>
+                                            
+                                            <TextBlock Text="Расчет уставок ДТО:" Height="20" Padding="0,2"
+                                                               TextAlignment="Left" TextWrapping="Wrap" FontWeight="Bold"/>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="2*"/>
+                                                    <ColumnDefinition Width="1*"/>
+                                                </Grid.ColumnDefinitions>
+
+                                                <StackPanel Grid.Column="0" >
+                                                    <TextBlock Text="Отстройка от максимального тока небаланса" Height="30" Padding="6,6" Background="AliceBlue"
+                                                               TextAlignment="Left" TextWrapping="Wrap" FontWeight="DemiBold"/>
+                                                    <TextBlock Text="Отстройка от БТН" Height="30" Padding="6,6"
+                                                               TextAlignment="Left" TextWrapping="Wrap" FontWeight="DemiBold"/>
+                                                    <TextBlock Text="Уставка срабатывания ДТО, о.е." Height="30" Padding="6,6" Background="AliceBlue"
+                                                               TextAlignment="Left" TextWrapping="Wrap" FontWeight="DemiBold"/>
+
+                                                </StackPanel>
+
+                                                <StackPanel Grid.Column="1">
+                                                    <TextBox  Text="0"  IsReadOnly="True" x:Name="_MaximumUnbalanceCurrent"
+                                                              Background="AliceBlue" TextAlignment="Center"/>
+                                                    <TextBox  Text="4"  IsReadOnly="False" x:Name="_BTN" TextAlignment="Center" BorderBrush="Black"
+                                                              PreviewTextInput="TextBox_PreviewTextInput"
+                                                              PreviewKeyDown="TextBox_PreviewKeyDown"
+                                                              TextChanged="_BTN_TextChanged"
+                                                              GotKeyboardFocus="TextBox_GotKeyboardFocus"/>
+                                                    <TextBox  Text="0"  IsReadOnly="True" x:Name="_DTOTriggerSetpoint"
+                                                              Background="AliceBlue" TextAlignment="Center"/>
+                                                </StackPanel>
+                                            </Grid>
 
                                         </StackPanel>
                                     </StackPanel>
@@ -307,11 +442,203 @@
 
 
                         </TabItem>
-                        <TabItem Header="Чувствителоьное ДЗТ">
+                        <TabItem Header="ДЗТ">
+
+                            <Grid x:Name="_DZT">
+                                <ScrollViewer HorizontalAlignment="Left"  VerticalScrollBarVisibility="Visible" Width="{Binding ElementName=DataTransform, Path=ActualWidth}">
+
+                                    <StackPanel hc:TitleElement.TitleWidth="168" Margin="15,15,15,15">
+                                        <StackPanel>
+                                            <TextBlock Text="&quot;Грубый&quot; орган ДЗТ" Height="20" Padding="0,2"
+                                                               TextAlignment="Left" TextWrapping="Wrap" FontWeight="Bold"/>
+                                            <Grid Width="Auto">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="2*"/>
+                                                    <ColumnDefinition Width="1*"/>
+                                                </Grid.ColumnDefinitions>
+
+                                                <StackPanel Grid.Column="0" >
+                                                    <TextBlock Text="Минимальный начальный ток срабатывания ДЗТ, о.е." Height="30" Padding="6,6" Background="AliceBlue"
+                                                               TextAlignment="Left" TextWrapping="Wrap" FontWeight="DemiBold"/>
+                                                    <TextBlock Text="Начальный ток срабатывания ДЗТ, о.е." Height="30" Padding="6,6"
+                                                               TextAlignment="Left" TextWrapping="Wrap" FontWeight="DemiBold"/>
+                                                    <TextBlock Text="Ток срабатывания ДЗТ при токе торможения 1,5 Iном" Height="30" Padding="6,6" Background="AliceBlue"
+                                                               TextAlignment="Left" TextWrapping="Wrap" FontWeight="DemiBold"/>
+                                                    <TextBlock Text="Коэффицент торможения второго участка ДЗТ" Height="30" Padding="6,6" 
+                                                               TextAlignment="Left" TextWrapping="Wrap" FontWeight="DemiBold"/>
+                                                    <TextBlock Text="Ток торможения при максимальном токе КЗ, о.е." Height="30" Padding="6,6" Background="AliceBlue"
+                                                               TextAlignment="Left" TextWrapping="Wrap" FontWeight="DemiBold"/>
+                                                    <TextBlock Text="Коэффицент торможения третьего участка ДЗТ" Height="30" Padding="6,6" 
+                                                               TextAlignment="Left" TextWrapping="Wrap" FontWeight="DemiBold"/>
+
+                                                </StackPanel>
+
+                                                <StackPanel Grid.Column="1">
+                                                    <TextBox  Text="0,3"  IsReadOnly="False" x:Name="_DZTRough" BorderBrush="Black"
+                                                              Background="AliceBlue" TextAlignment="Center"
+                                                              PreviewTextInput="TextBox_PreviewTextInput"
+                                                              PreviewKeyDown="TextBox_PreviewKeyDown"
+                                                              TextChanged="_DZTRough_TextChanged"
+                                                              GotKeyboardFocus="TextBox_GotKeyboardFocus"/>
+                                                    <TextBox  Text="0" x:Name="_Rought_InitialCurrent" IsReadOnly="True"
+                                                              TextAlignment="Center"/>
+                                                    <TextBox  Text="0" x:Name="_Rought_InitialCurrent_1_5" IsReadOnly="True"
+                                                              Background="AliceBlue" TextAlignment="Center"/>
+                                                    <TextBox  Text="0" x:Name="_Rought_SecondDecelerationCoefficient" IsReadOnly="True"
+                                                              TextAlignment="Center"/>
+                                                    <TextBox  Text="0" x:Name="_Rought_MaxiBrakingCurrent" IsReadOnly="True"
+                                                              Background="AliceBlue" TextAlignment="Center"/>
+                                                    <TextBox  Text="0" x:Name="_Rought_ThirdDecelerationCoefficient" IsReadOnly="True"
+                                                              TextAlignment="Center"/>
+                                                </StackPanel>
+                                            </Grid>
+
+                                            <Separator Height="5"/>
+                                            
+                                            <TextBlock Text="&quot;Чувствительный&quot; орган ДЗТ" Height="20" Padding="0,2"
+                                                               TextAlignment="Left" TextWrapping="Wrap" FontWeight="Bold"/>
+                                            <Grid Width="Auto">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="2*"/>
+                                                    <ColumnDefinition Width="1*"/>
+                                                </Grid.ColumnDefinitions>
+
+                                                <StackPanel Grid.Column="0" >
+                                                    <TextBlock Text="Минимальный начальный ток срабатывания ДЗТ, о.е." Height="30" Padding="6,6" Background="AliceBlue"
+                                                               TextAlignment="Left" TextWrapping="Wrap" FontWeight="DemiBold"/>
+                                                    <TextBlock Text="Начальный ток срабатывания ДЗТ, о.е." Height="30" Padding="6,6"
+                                                               TextAlignment="Left" TextWrapping="Wrap" FontWeight="DemiBold"/>
+                                                    <TextBlock Text="Ток срабатывания ДЗТ при токе торможения 1,5Iном" Height="30" Padding="6,6" Background="AliceBlue"
+                                                               TextAlignment="Left" TextWrapping="Wrap" FontWeight="DemiBold"/>
+                                                    <TextBlock Text="Коэффицент торможения второго участка ДЗТ" Height="30" Padding="6,6" 
+                                                               TextAlignment="Left" TextWrapping="Wrap" FontWeight="DemiBold"/>
+                                                    <TextBlock Text="Отстройка от максимального тока небаланса" Height="30" Padding="6,6" Background="AliceBlue"
+                                                               TextAlignment="Left" TextWrapping="Wrap" FontWeight="DemiBold"/>
+                                                    <TextBlock Text="Коэффицент торможения третьего участка ДЗТ" Height="30" Padding="6,6" 
+                                                               TextAlignment="Left" TextWrapping="Wrap" FontWeight="DemiBold"/>
+
+                                                </StackPanel>
+
+                                                <StackPanel Grid.Column="1">
+                                                    <TextBox  Text="0,3"  IsReadOnly="False" x:Name="_DZTSensitive" BorderBrush="Black"
+                                                              Background="AliceBlue" TextAlignment="Center"
+                                                              PreviewTextInput="TextBox_PreviewTextInput"
+                                                              PreviewKeyDown="TextBox_PreviewKeyDown"
+                                                              TextChanged="_DZTSensitive_TextChanged"
+                                                              GotKeyboardFocus="TextBox_GotKeyboardFocus"/>
+                                                    <TextBox  Text="0" x:Name="_Sensitive_InitialCurrent" IsReadOnly="True"
+                                                              TextAlignment="Center"/>
+                                                    <TextBox  Text="0" x:Name="_Sensitive_InitialCurrent_1_5" IsReadOnly="True"
+                                                              Background="AliceBlue" TextAlignment="Center"/>
+                                                    <TextBox  Text="0" x:Name="_Sensitive_SecondDecelerationCoefficient" IsReadOnly="True"
+                                                              TextAlignment="Center"/>
+                                                    <TextBox  Text="0" x:Name="_Sensitive_MaxiBrakingCurrent" IsReadOnly="True"
+                                                              Background="AliceBlue" TextAlignment="Center"/>
+                                                    <TextBox  Text="0" x:Name="_Sensitive_ThirdDecelerationCoefficient" IsReadOnly="True"
+                                                              TextAlignment="Center"/>
+                                                </StackPanel>
+                                            </Grid>
+                                            
+                                            <Separator Height="5"/>
+
+                                            <Grid Width="Auto">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="2*"/>
+                                                    <ColumnDefinition Width="1*"/>
+                                                </Grid.ColumnDefinitions>
+
+                                                <StackPanel Grid.Column="0" >
+                                                    <TextBlock Text="Коэффициент чувствительности" Height="30" Padding="6,6" Background="AliceBlue"
+                                                               TextAlignment="Left" TextWrapping="Wrap" FontWeight="DemiBold"/>
+                                                    <TextBlock Text="Уставка сигнализации небаланса" Height="30" Padding="6,6" 
+                                                               TextAlignment="Left" TextWrapping="Wrap" FontWeight="DemiBold"/>
+
+                                                </StackPanel>
+
+                                                <StackPanel Grid.Column="1">
+                                                    <TextBox  Text="0" x:Name="_SensitivityCoefficient" IsReadOnly="True"
+                                                              Background="AliceBlue" TextAlignment="Center"/>
+                                                    <TextBox  Text="0" x:Name="_UnbalanceAlarmRate" IsReadOnly="True"
+                                                              TextAlignment="Center"/>
+                                                </StackPanel>
+                                            </Grid>
+
+                                        </StackPanel>
+                                    </StackPanel>
+                                </ScrollViewer>
+                            </Grid>
+
 
                         </TabItem>
-                        <TabItem Header="Грубое ДЗТ">
+                        <TabItem Header="Уставки защиты">
+                            <Grid x:Name="result">
+                                <ScrollViewer HorizontalAlignment="Left"  VerticalScrollBarVisibility="Visible" Width="{Binding ElementName=DataTransform, Path=ActualWidth}">
 
+                                    <StackPanel hc:TitleElement.TitleWidth="168" Margin="15,15,15,15">
+                                        <StackPanel>
+                                            <TextBlock Text="Результаты расчёта уставоки защиты:" Height="20" Padding="0,2"
+                                                               TextAlignment="Left" TextWrapping="Wrap" FontWeight="Bold"/>
+                                            <Grid Width="Auto">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="2*"/>
+                                                    <ColumnDefinition Width="1*"/>
+                                                </Grid.ColumnDefinitions>
+
+                                                <StackPanel Grid.Column="0" >
+                                                    <TextBlock Text="Номинальный ток ПТН стороны ВН, А" Height="30" Padding="6,6" Background="AliceBlue"
+                                                               TextAlignment="Left" TextWrapping="Wrap" FontWeight="DemiBold"/>
+                                                    <TextBlock Text="Номинальный ток ПТН стороны СН (НН2), А" Height="30" Padding="6,6" x:Name="Middle3"
+                                                               TextAlignment="Left" TextWrapping="Wrap" FontWeight="DemiBold"/>
+                                                    <TextBlock Text="Номинальный ток ПТН стороны НН, А" Height="30" Padding="6,6" Background="AliceBlue"
+                                                               TextAlignment="Left" TextWrapping="Wrap" FontWeight="DemiBold"/>
+                                                    <TextBlock Text="Уставка срабатывания ДТО, о.е." Height="30" Padding="6,6"
+                                                               TextAlignment="Left" TextWrapping="Wrap" FontWeight="DemiBold"/>
+                                                    <TextBlock Text="Уставка сигнализации небаланса" Height="30" Padding="6,6" Background="AliceBlue"
+                                                               TextAlignment="Left" TextWrapping="Wrap" FontWeight="DemiBold"/>
+                                                    <TextBlock Text="Начальный ток срабатывания ДЗТ, о.е." Height="30" Padding="6,6"
+                                                               TextAlignment="Left" TextWrapping="Wrap" FontWeight="DemiBold"/>
+                                                    <TextBlock Text="Коэффицент торможения второго участка ДЗТ" Height="30" Padding="6,6" Background="AliceBlue"
+                                                               TextAlignment="Left" TextWrapping="Wrap" FontWeight="DemiBold"/>
+                                                    <TextBlock Text="Коэффицент торможения третьего участка ДЗТ" Height="30" Padding="6,6" 
+                                                               TextAlignment="Left" TextWrapping="Wrap" FontWeight="DemiBold"/>
+                                                    <TextBlock Text="Начальный ток срабатывания ДЗТ, о.е." Height="30" Padding="6,6" Background="AliceBlue"
+                                                               TextAlignment="Left" TextWrapping="Wrap" FontWeight="DemiBold"/>
+                                                    <TextBlock Text="Коэффицент торможения второго участка ДЗТ" Height="30" Padding="6,6" 
+                                                               TextAlignment="Left" TextWrapping="Wrap" FontWeight="DemiBold"/>
+                                                    <TextBlock Text="Коэффицент торможения третьего участка ДЗТ" Height="30" Padding="6,6" Background="AliceBlue"
+                                                               TextAlignment="Left" TextWrapping="Wrap" FontWeight="DemiBold"/>
+
+                                                </StackPanel>
+
+                                                <StackPanel Grid.Column="1">
+                                                    <TextBox  Text="0" x:Name="r_PTNHigth" IsReadOnly="True" Background="AliceBlue"
+                                                              TextAlignment="Center"/>
+                                                    <TextBox  Text="0" x:Name="r_PTNMedium" IsReadOnly="True"
+                                                              TextAlignment="Center"/>
+                                                    <TextBox  Text="0" x:Name="r_PTNLower" IsReadOnly="True" Background="AliceBlue"
+                                                              TextAlignment="Center"/>
+                                                    <TextBox  Text="0" x:Name="r_DTOTriggerSetpoint" IsReadOnly="True"
+                                                              TextAlignment="Center"/>
+                                                    <TextBox  Text="0" x:Name="r_UnbalanceAlarmRate" IsReadOnly="True" Background="AliceBlue"
+                                                              TextAlignment="Center"/>
+                                                    <TextBox  Text="0" x:Name="r_Rought_InitialCurrent" IsReadOnly="True"
+                                                              TextAlignment="Center"/>
+                                                    <TextBox  Text="0" x:Name="r_Rought_SecondDecelerationCoefficient" IsReadOnly="True"  Background="AliceBlue"
+                                                              TextAlignment="Center"/>
+                                                    <TextBox  Text="0" x:Name="r_Rought_ThirdDecelerationCoefficient" IsReadOnly="True" 
+                                                              TextAlignment="Center"/>
+                                                    <TextBox  Text="0" x:Name="r_Sensitive_InitialCurrent" IsReadOnly="True" Background="AliceBlue"
+                                                              TextAlignment="Center"/>
+                                                    <TextBox  Text="0" x:Name="r_Sensitive_SecondDecelerationCoefficient" IsReadOnly="True" 
+                                                              TextAlignment="Center"/>
+                                                    <TextBox  Text="0" x:Name="r_Sensitive_ThirdDecelerationCoefficient" IsReadOnly="True" Background="AliceBlue"
+                                                              TextAlignment="Center"/>
+                                                </StackPanel>
+                                            </Grid>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </ScrollViewer>
+                            </Grid>
                         </TabItem>
                     </TabControl>
                 </Grid>

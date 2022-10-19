@@ -15,6 +15,8 @@ namespace Program
             Triple = 3
         }
 
+
+
         internal static TypeTransformer type { get; set; } = TypeTransformer.Triple;
 
         internal static double nominalPower { get; set; } = 40;
