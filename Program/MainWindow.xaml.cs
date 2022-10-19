@@ -223,36 +223,6 @@ namespace Program
             }
         }
 
-
-        private bool CheckReadyList_1()
-        {
-            if (nominalPower != null && nominalPower.Text.Length < 1)
-                return false;
-
-            if (nominalHightVoltage != null && nominalHightVoltage.Text.Length < 1)
-                return false;
-
-            if (nominalMediumVoltage != null && nominalMediumVoltage.Text.Length < 1 && TransformerData.type != TransformerData.TypeTransformer.Double)
-                return false;
-
-            if (nominalLowerVoltage != null && nominalLowerVoltage.Text.Length < 1)
-                return false;
-
-            if (settingCountRPNHight != null && settingCountRPNHight.Text.Length < 1)
-                return false;
-
-            if (stepRPNHight != null && stepRPNHight.Text.Length < 1)
-                return false;
-
-            if (settingCountRPNMedium != null && settingCountRPNMedium.Text.Length < 1 && TransformerData.type == TransformerData.TypeTransformer.Triple)
-                return false;
-
-            if (stepRPNMedium != null && stepRPNMedium.Text.Length < 1 && TransformerData.type == TransformerData.TypeTransformer.Triple)
-                return false;
-
-            return true;
-        }
-
         #endregion
 
         #region TabControl #2
@@ -359,7 +329,7 @@ namespace Program
                     }
             }
         }
-       
+
         private void CheckBox_Click(object sender, RoutedEventArgs e)
         {
             var checkBox = sender as CheckBox;
@@ -554,6 +524,32 @@ namespace Program
         }
 
 
+        internal void ShowGrafic()
+        {
+            var Blue = new Chart(
+                new double[] { 0, 0.5, 1.5, Calcul.Rought_MaxiBrakingCurrent },
+                new double[] { Calcul.Rought_InitialCurrent, Calcul.Rought_InitialCurrent, Calcul.Rought_InitialCurrent + (1.5 - 0.5) * Calcul.Rought_SecondDecelerationCoefficient, Calcul.DTOTriggerSetpoint },
+                Brushes.Blue);
+
+            var Green = new Chart(
+                new double[] { 0, 0.5, 1.5, (1.5 * Calcul.Sensitive_ThirdDecelerationCoefficient + Calcul.DTOTriggerSetpoint - (Calcul.Sensitive_InitialCurrent + (1.5 - 0.5) * Calcul.Sensitive_SecondDecelerationCoefficient)) / Calcul.Sensitive_ThirdDecelerationCoefficient },
+                new double[] { Calcul.Sensitive_InitialCurrent, Calcul.Sensitive_InitialCurrent, Calcul.Sensitive_InitialCurrent + (1.5 - 0.5) * Calcul.Sensitive_SecondDecelerationCoefficient,
+                    (Calcul.Sensitive_InitialCurrent + (1.5 - 0.5) * Calcul.Sensitive_SecondDecelerationCoefficient) +  ((1.5 * Calcul.Sensitive_ThirdDecelerationCoefficient + Calcul.DTOTriggerSetpoint - (Calcul.Sensitive_InitialCurrent + (1.5 - 0.5) * Calcul.Sensitive_SecondDecelerationCoefficient))/ Calcul.Sensitive_ThirdDecelerationCoefficient - 1.5) * Calcul.Sensitive_ThirdDecelerationCoefficient},
+                Brushes.Green);
+
+            var Red = new Chart(
+                new double[] { 0, Math.Round((1.5 * Calcul.Sensitive_ThirdDecelerationCoefficient + Calcul.DTOTriggerSetpoint - (Calcul.Sensitive_InitialCurrent + (1.5 - 0.5) * Calcul.Sensitive_SecondDecelerationCoefficient)) / Calcul.Sensitive_ThirdDecelerationCoefficient, 0, MidpointRounding.ToPositiveInfinity) },
+                new double[] { Calcul.DTOTriggerSetpoint, Calcul.DTOTriggerSetpoint },
+                Brushes.Red
+                );
+
+            Diagramma taskWindow = new Diagramma(Chart.Build(Red, Blue, Green));
+
+            taskWindow.Show();
+            taskWindow.Drawn();
+        }
+
+
         private void TextBox_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)  // меняет ТОЧКУ на ЗАПЯТУЮ и запрещает повторную их запись
         {
             if (!(Char.IsDigit(e.Text, 0) || e.Text == "." || e.Text == ","))
@@ -664,6 +660,11 @@ namespace Program
         {
             Calcul.round = 4;
             Calculing();
+        }
+
+        private void Rectangle_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            ShowGrafic();
         }
     }
 }

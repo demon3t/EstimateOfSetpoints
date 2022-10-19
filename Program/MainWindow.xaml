@@ -373,7 +373,7 @@
                                             </Grid>
 
                                             <Separator Height="5"/>
-                                            
+
                                             <TextBlock Text="Выбор ПТН:" Height="20" Padding="0,2"
                                                                TextAlignment="Left" TextWrapping="Wrap" FontWeight="Bold"/>
                                             <Grid>
@@ -403,7 +403,7 @@
                                             </Grid>
 
                                             <Separator Height="5"/>
-                                            
+
                                             <TextBlock Text="Расчет уставок ДТО:" Height="20" Padding="0,2"
                                                                TextAlignment="Left" TextWrapping="Wrap" FontWeight="Bold"/>
                                             <Grid>
@@ -494,7 +494,7 @@
                                             </Grid>
 
                                             <Separator Height="5"/>
-                                            
+
                                             <TextBlock Text="&quot;Чувствительный&quot; орган ДЗТ" Height="20" Padding="0,2"
                                                                TextAlignment="Left" TextWrapping="Wrap" FontWeight="Bold"/>
                                             <Grid Width="Auto">
@@ -538,7 +538,7 @@
                                                               TextAlignment="Center"/>
                                                 </StackPanel>
                                             </Grid>
-                                            
+
                                             <Separator Height="5"/>
 
                                             <Grid Width="Auto">
@@ -638,6 +638,12 @@
                                         </StackPanel>
                                     </StackPanel>
                                 </ScrollViewer>
+                                <Rectangle Height="25" Width="25" Margin="15,5" RadiusX="4" RadiusY="4"
+                                           StrokeThickness="1" Stroke="LightGray" Fill="Transparent"
+                                           VerticalAlignment="Top" HorizontalAlignment="Right" Panel.ZIndex="3"
+                                           hc:BackgroundSwitchElement.MouseDownBackground="AliceBlue"
+                                           hc:BackgroundSwitchElement.MouseHoverBackground="LightBlue"
+                                           MouseLeftButtonDown="Rectangle_MouseLeftButtonDown"/>
                             </Grid>
                         </TabItem>
                     </TabControl>
