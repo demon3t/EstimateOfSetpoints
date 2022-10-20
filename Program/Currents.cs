@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Program
+﻿namespace Program
 {
     internal static class Currents
     {
@@ -15,7 +11,7 @@ namespace Program
         internal static TSN tsn = TSN.No;
 
         internal static double MaxCurrentHightKZ { get; set; } = 4427;
-        internal static double MaxCurrentMildleKZ{ get; set; } = 4514;
+        internal static double MaxCurrentMildleKZ { get; set; } = 4514;
         internal static double MaxCurrentLowerKZ { get; set; } = 14177;
         internal static double MaxCurrentHightKZ_ToHight { get; set; } = 4427;
         internal static double MaxCurrentMildleKZ_ToHight { get; set; } = 1729;

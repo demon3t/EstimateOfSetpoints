@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Program
+﻿namespace Program
 {
     internal static class TransformerData
     {
@@ -14,9 +8,6 @@ namespace Program
             Split = 2,
             Triple = 3
         }
-
-
-
         internal static TypeTransformer type { get; set; } = TypeTransformer.Triple;
 
         internal static double nominalPower { get; set; } = 40;

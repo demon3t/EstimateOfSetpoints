@@ -3,19 +3,26 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Program" xmlns:hc="https://handyorg.github.io/handycontrol"
+        xmlns:local="clr-namespace:Program"
+        xmlns:hc="https://handyorg.github.io/handycontrol"
         mc:Ignorable="d"
         x:Name="window"
-        Title="Характеристика срабатывания защиты" MinHeight="400" MinWidth="430" 
+        Title="Характеристика срабатывания защиты" Height="1080" Width="1980" 
         ShowActivated="True">
     <Grid x:Name="maingrig">
-        
-        <Grid Name="grid" Margin="10,100,10,10">
-
-        </Grid>
+        <Border VerticalAlignment="Center" HorizontalAlignment="Center"
+              Height="Auto" Width="Auto" Margin="420,180" Background="Transparent"
+                BorderBrush="Transparent" BorderThickness="0" >
+            <Grid
+                x:Name="ForCanvas" VerticalAlignment="Center" HorizontalAlignment="Center"
+              Height="Auto" Width="Auto" Margin="1080,720" SizeChanged="ForCanvas_SizeChanged">
+                
+            </Grid>
+            
+        </Border>
         <Label Content="1 деление по горизонтали - 1 сек., 1 деление по вертикали - 1 А."
                    HorizontalAlignment="Right" VerticalAlignment="Bottom"
-                   Margin="0,0,5,5" Panel.ZIndex="3"/>
+                   Margin="40,0,40,5" Panel.ZIndex="3"/>
         
     </Grid>
 </Window>

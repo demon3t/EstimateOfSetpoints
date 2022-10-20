@@ -1,18 +1,9 @@
 ﻿using HandyControl.Tools;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Program
 {
@@ -542,6 +533,11 @@ namespace Program
                 new double[] { Calcul.DTOTriggerSetpoint, Calcul.DTOTriggerSetpoint },
                 Brushes.Red
                 );
+
+            Chart.chart = new Chart(
+                new double[] { Math.Round((1.5 * Calcul.Sensitive_ThirdDecelerationCoefficient + Calcul.DTOTriggerSetpoint - (Calcul.Sensitive_InitialCurrent + (1.5 - 0.5) * Calcul.Sensitive_SecondDecelerationCoefficient)) / Calcul.Sensitive_ThirdDecelerationCoefficient, 0, MidpointRounding.ToPositiveInfinity) },
+                new double[] { Calcul.DTOTriggerSetpoint },
+                Brushes.Transparent);
 
             Diagramma taskWindow = new Diagramma(Chart.Build(Red, Blue, Green));
 

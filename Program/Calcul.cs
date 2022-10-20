@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Security.Claims;
-using System.Text;
-using System.Windows.Documents;
 
 namespace Program
 {
@@ -130,14 +126,11 @@ namespace Program
             // Сигнализация небаланса
             UnbalanceAlarmRate = GetUnbalanceAlarmRate();
         }
-
-
         public static double GetSensitivityCoefficient()
         {
             return Math.Round(Currents.MinCurrentOtherKZToHight * (1 - TT.Emin) / NominalCurrentHight / Rought_InitialCurrent
                 , round, MidpointRounding.ToPositiveInfinity);
         }
-
         public static double GetUnbalanceAlarmRate()
         {
             double k1 = TransformerData.settingCountRPNHight == 0 ? 0 :
@@ -151,13 +144,6 @@ namespace Program
 
             return Math.Round((1.1 * (1 * 1 * TT.Erab_max + k1 * 1 + k2 + 0.05 + k3) * 1) / Rought_InitialCurrent, round, MidpointRounding.ToPositiveInfinity);
         }
-
-
-
-
-
-
-
         public static double GetSensitive_InitialCurrent()
         {
             double result1 = 0.3;
@@ -219,10 +205,6 @@ namespace Program
             return Math.Round((Sensitive_MaxUnbalanceCurrent - Sensitive_InitialCurrent_1_5) / (Rought_MaxiBrakingCurrent - 1.5),
                 round, MidpointRounding.ToPositiveInfinity);
         }
-
-
-
-
         public static double GetRought_InitialCurrent() // 
         {
             double result1 = 0.3;
@@ -271,9 +253,6 @@ namespace Program
             return Math.Round((MaximumUnbalanceCurrent - Rought_InitialCurrent_1_5) / (Rought_MaxiBrakingCurrent - 1.5),
                 round, MidpointRounding.ToPositiveInfinity);
         }
-
-
-
         public static double GetMaximumUnbalanceCurrent() // 
         {
             double k1 = TransformerData.settingCountRPNHight == 0 ? 0 :
