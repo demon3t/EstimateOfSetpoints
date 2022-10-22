@@ -7,22 +7,13 @@
         xmlns:hc="https://handyorg.github.io/handycontrol"
         mc:Ignorable="d"
         x:Name="window"
-        Title="Характеристика срабатывания защиты" Height="1080" Width="1980" 
+        Title="Характеристика срабатывания защиты" Height="600" Width="800" 
         ShowActivated="True">
-    <Grid x:Name="maingrig">
-        <Border VerticalAlignment="Center" HorizontalAlignment="Center"
-              Height="Auto" Width="Auto" Margin="420,180" Background="Transparent"
-                BorderBrush="Transparent" BorderThickness="0" >
-            <Grid
-                x:Name="ForCanvas" VerticalAlignment="Center" HorizontalAlignment="Center"
-              Height="Auto" Width="Auto" Margin="1080,720" SizeChanged="ForCanvas_SizeChanged">
-                
-            </Grid>
-            
-        </Border>
-        <Label Content="1 деление по горизонтали - 1 сек., 1 деление по вертикали - 1 А."
-                   HorizontalAlignment="Right" VerticalAlignment="Bottom"
-                   Margin="40,0,40,5" Panel.ZIndex="3"/>
-        
+    <Grid x:Name="maingrid">
+
+        <WpfPlot x:Name="MyPlot" Margin="0">
+
+        </WpfPlot>
+
     </Grid>
 </Window>

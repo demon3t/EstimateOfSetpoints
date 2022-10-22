@@ -7,28 +7,28 @@
         DataContext="{Binding RelativeSource={RelativeSource Self}}"
         mc:Ignorable="d"
         x:Name="MW"
-        Title="MainWindow" MaxHeight="570" MaxWidth="530"
-                           MinHeight="570" MinWidth="530">
+        Title="Расчёт уставок" MaxHeight="570" MaxWidth="530" MinHeight="570" MinWidth="530"
+        Icon="C:\Users\Nipa\source\repos\EstimateOfSetpoints\Program\Resources\beta.png">
     
     <Grid>
         <ComboBox Name="phonesList" Height="30" Width="85" VerticalAlignment="Top" HorizontalAlignment="Right"
                   Panel.ZIndex="1">
-            <TextBlock
+            <ComboBoxItem
                 PreviewMouseLeftButtonDown="TextBlock_PreviewMouseLeftButtonDown">
                 0.1
-            </TextBlock>
-            <TextBlock
+            </ComboBoxItem>
+            <ComboBoxItem
                 PreviewMouseLeftButtonDown="TextBlock_PreviewMouseLeftButtonDown_1">
                 0.01
-            </TextBlock>
-            <TextBlock
+            </ComboBoxItem>
+            <ComboBoxItem
                 PreviewMouseLeftButtonDown="TextBlock_PreviewMouseLeftButtonDown_2">
                 0.001
-            </TextBlock>
-            <TextBlock
+            </ComboBoxItem>
+            <ComboBoxItem
                 PreviewMouseLeftButtonDown="TextBlock_PreviewMouseLeftButtonDown_3">
                 0.0001
-            </TextBlock>
+            </ComboBoxItem>
         </ComboBox>
         <TabControl>
             <TabItem Header="Данные трансформатора"
@@ -638,12 +638,18 @@
                                         </StackPanel>
                                     </StackPanel>
                                 </ScrollViewer>
-                                <Rectangle Height="25" Width="25" Margin="15,5" RadiusX="4" RadiusY="4"
-                                           StrokeThickness="1" Stroke="LightGray" Fill="Transparent"
+                                <Rectangle Height="25" Width="25" Margin="15,5" RadiusX="1" RadiusY="1"
+                                           StrokeThickness="1" Stroke="LightGray"
                                            VerticalAlignment="Top" HorizontalAlignment="Right" Panel.ZIndex="3"
-                                           hc:BackgroundSwitchElement.MouseDownBackground="AliceBlue"
-                                           hc:BackgroundSwitchElement.MouseHoverBackground="LightBlue"
-                                           MouseLeftButtonDown="Rectangle_MouseLeftButtonDown"/>
+                                           hc:BackgroundSwitchElement.MouseDownBackground="LightGray"
+                                           hc:BackgroundSwitchElement.MouseHoverBackground="LightGray"
+                                           MouseLeftButtonDown="Rectangle_MouseLeftButtonDown">
+                                    <Rectangle.Fill>
+
+                                        <ImageBrush ImageSource="C:\Users\Nipa\source\repos\EstimateOfSetpoints\Program\Resources\pointgraph.png"/>
+
+                                    </Rectangle.Fill>
+                                </Rectangle>
                             </Grid>
                         </TabItem>
                     </TabControl>

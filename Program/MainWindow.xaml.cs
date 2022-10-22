@@ -518,31 +518,60 @@ namespace Program
         internal void ShowGrafic()
         {
             var Blue = new Chart(
-                new double[] { 0, 0.5, 1.5, Calcul.Rought_MaxiBrakingCurrent },
-                new double[] { Calcul.Rought_InitialCurrent, Calcul.Rought_InitialCurrent, Calcul.Rought_InitialCurrent + (1.5 - 0.5) * Calcul.Rought_SecondDecelerationCoefficient, Calcul.DTOTriggerSetpoint },
-                Brushes.Blue);
+                new double[]
+                {   
+                    0,
+                    0.5,
+                    1.5,
+                    Calcul.Rought_MaxiBrakingCurrent
+                },
+                new double[]
+                {
+                    Calcul.Rought_InitialCurrent,
+                    Calcul.Rought_InitialCurrent,
+                    Calcul.Rought_InitialCurrent + (1.5 - 0.5) * Calcul.Rought_SecondDecelerationCoefficient,
+                    Calcul.DTOTriggerSetpoint
+                },
+                Brushes.Blue );
 
             var Green = new Chart(
-                new double[] { 0, 0.5, 1.5, (1.5 * Calcul.Sensitive_ThirdDecelerationCoefficient + Calcul.DTOTriggerSetpoint - (Calcul.Sensitive_InitialCurrent + (1.5 - 0.5) * Calcul.Sensitive_SecondDecelerationCoefficient)) / Calcul.Sensitive_ThirdDecelerationCoefficient },
-                new double[] { Calcul.Sensitive_InitialCurrent, Calcul.Sensitive_InitialCurrent, Calcul.Sensitive_InitialCurrent + (1.5 - 0.5) * Calcul.Sensitive_SecondDecelerationCoefficient,
-                    (Calcul.Sensitive_InitialCurrent + (1.5 - 0.5) * Calcul.Sensitive_SecondDecelerationCoefficient) +  ((1.5 * Calcul.Sensitive_ThirdDecelerationCoefficient + Calcul.DTOTriggerSetpoint - (Calcul.Sensitive_InitialCurrent + (1.5 - 0.5) * Calcul.Sensitive_SecondDecelerationCoefficient))/ Calcul.Sensitive_ThirdDecelerationCoefficient - 1.5) * Calcul.Sensitive_ThirdDecelerationCoefficient},
-                Brushes.Green);
+                new double[]
+                {
+                    0,
+                    0.5,
+                    1.5,
+                    (1.5 * Calcul.Sensitive_ThirdDecelerationCoefficient + Calcul.DTOTriggerSetpoint - (Calcul.Sensitive_InitialCurrent + (1.5 - 0.5) * Calcul.Sensitive_SecondDecelerationCoefficient)) / Calcul.Sensitive_ThirdDecelerationCoefficient
+                },
+                new double[]
+                {
+                    Calcul.Sensitive_InitialCurrent,
+                    Calcul.Sensitive_InitialCurrent,
+                    Calcul.Sensitive_InitialCurrent + (1.5 - 0.5) * Calcul.Sensitive_SecondDecelerationCoefficient,
+                    (Calcul.Sensitive_InitialCurrent + (1.5 - 0.5) * Calcul.Sensitive_SecondDecelerationCoefficient) +  ((1.5 * Calcul.Sensitive_ThirdDecelerationCoefficient + Calcul.DTOTriggerSetpoint - (Calcul.Sensitive_InitialCurrent + (1.5 - 0.5) * Calcul.Sensitive_SecondDecelerationCoefficient))/ Calcul.Sensitive_ThirdDecelerationCoefficient - 1.5) * Calcul.Sensitive_ThirdDecelerationCoefficient
+                },
+                Brushes.Green );
+
 
             var Red = new Chart(
-                new double[] { 0, Math.Round((1.5 * Calcul.Sensitive_ThirdDecelerationCoefficient + Calcul.DTOTriggerSetpoint - (Calcul.Sensitive_InitialCurrent + (1.5 - 0.5) * Calcul.Sensitive_SecondDecelerationCoefficient)) / Calcul.Sensitive_ThirdDecelerationCoefficient, 0, MidpointRounding.ToPositiveInfinity) },
-                new double[] { Calcul.DTOTriggerSetpoint, Calcul.DTOTriggerSetpoint },
-                Brushes.Red
-                );
+                new double[]
+                {
+                    0,
+                    Math.Round((1.5 * Calcul.Sensitive_ThirdDecelerationCoefficient + Calcul.DTOTriggerSetpoint - (Calcul.Sensitive_InitialCurrent + (1.5 - 0.5) * Calcul.Sensitive_SecondDecelerationCoefficient)) / Calcul.Sensitive_ThirdDecelerationCoefficient, 0, MidpointRounding.ToPositiveInfinity) >
+                    Math.Round((1.5 * Calcul.Rought_ThirdDecelerationCoefficient + Calcul.DTOTriggerSetpoint - (Calcul.Rought_InitialCurrent + (1.5 - 0.5) * Calcul.Rought_SecondDecelerationCoefficient)) / Calcul.Rought_ThirdDecelerationCoefficient, 0, MidpointRounding.ToPositiveInfinity) ?
+                    Math.Round((1.5 * Calcul.Sensitive_ThirdDecelerationCoefficient + Calcul.DTOTriggerSetpoint - (Calcul.Sensitive_InitialCurrent + (1.5 - 0.5) * Calcul.Sensitive_SecondDecelerationCoefficient)) / Calcul.Sensitive_ThirdDecelerationCoefficient, 0, MidpointRounding.ToPositiveInfinity) :
+                    Math.Round((1.5 * Calcul.Rought_ThirdDecelerationCoefficient + Calcul.DTOTriggerSetpoint - (Calcul.Rought_InitialCurrent + (1.5 - 0.5) * Calcul.Rought_SecondDecelerationCoefficient)) / Calcul.Rought_ThirdDecelerationCoefficient, 0, MidpointRounding.ToPositiveInfinity)
+                },
+                new double[]
+                {
+                    Calcul.DTOTriggerSetpoint,
+                    Calcul.DTOTriggerSetpoint
+                },
+                Brushes.Red );
 
-            Chart.chart = new Chart(
-                new double[] { Math.Round((1.5 * Calcul.Sensitive_ThirdDecelerationCoefficient + Calcul.DTOTriggerSetpoint - (Calcul.Sensitive_InitialCurrent + (1.5 - 0.5) * Calcul.Sensitive_SecondDecelerationCoefficient)) / Calcul.Sensitive_ThirdDecelerationCoefficient, 0, MidpointRounding.ToPositiveInfinity) },
-                new double[] { Calcul.DTOTriggerSetpoint },
-                Brushes.Transparent);
 
-            Diagramma taskWindow = new Diagramma(Chart.Build(Red, Blue, Green));
-
+            Diagramma taskWindow = new Diagramma();
             taskWindow.Show();
-            taskWindow.Drawn();
+            taskWindow.Drawn(Blue, Green, Red);
         }
 
 
