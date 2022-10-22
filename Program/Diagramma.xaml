@@ -8,7 +8,8 @@
         mc:Ignorable="d"
         x:Name="window"
         Title="Характеристика срабатывания защиты" Height="600" Width="800" 
-        ShowActivated="True">
+        ShowActivated="True"
+        Icon="C:\Users\Nipa\source\repos\EstimateOfSetpoints\Program\Resources\pointgraph.png">
     <Grid x:Name="maingrid">
 
         <WpfPlot x:Name="MyPlot" Margin="0">
